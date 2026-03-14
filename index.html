@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amin Sassi - Video Editor & Creative Storyteller</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><rect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%230a1830%27/><text x=%2750%27 y=%2768%27 text-anchor=%27middle%27 font-family=%27Arial Black,Arial,sans-serif%27 font-size=%2742%27 font-weight=%27900%27 fill=%27%2360b8ff%27>AS</text></svg>">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="node_modules/flag-icons/css/flag-icons.min.css">
 </head>
@@ -153,7 +154,7 @@
                 <ul id="navMenu">
                     <li><a href="#home" data-en="Home" data-tn="الصفحة الرئيسية">Home</a></li>
                     <li><a href="#about" data-en="About" data-tn="من أنا">About</a></li>
-                    <li><a href="#portfolio" data-en="Portfolio" data-tn="أعمالي">Portfolio</a></li>                    <li><a href="#testimonials" data-en="Testimonials" data-tn="آراء العملاء">Testimonials</a></li>                    <li><a href="#contact" data-en="Contact" data-tn="تواصل معايا">Contact</a></li>
+                    <li><a href="#portfolio" data-en="Portfolio" data-tn="أعمالي">Portfolio</a></li>                    <li><a href="#testimonials" data-en="Testimonials" data-tn="آراء العملاء">Testimonials</a></li>                    <li><a href="#contact" data-en="Contact" data-tn="ØªÙˆØ§ØµÙ„ Ù…Ø¹Ø§ÙŠØ§">Contact</a></li>
                 </ul>
                 <div class="lang-picker" id="langPicker">
                     <button class="lang-trigger" id="langTrigger" aria-label="Change language" aria-expanded="false">
@@ -421,13 +422,13 @@
 
     <!-- Client Feedback Section -->
     <section id="testimonials" class="feedback-section">
-        <h2 data-en="Client Feedback" data-tn="Ø¢Ø±Ø§Ø¡ Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡">Client Feedback</h2>
-        <p class="section-subtitle" data-en="Hear directly from the brands I've worked with" data-tn="Ø§Ø³Ù…Ø¹ Ù…Ø¨Ø§Ø´Ø±Ø© Ù…Ù† Ø¹Ù…Ù„Ø§Ø¦ÙŠ">Hear directly from the brands I've worked with</p>
+        <h2 data-en="Client Feedback" data-tn="آراء العملاء">Client Feedback</h2>
+        <p class="section-subtitle" data-en="Hear directly from the brands I've worked with" data-tn="اسمع مباشرة من عملائي">Hear directly from the brands I've worked with</p>
 
         <div class="feedback-stack-outer" id="feedbackOuter">
             <button class="fb-scroll-up" id="fbScrollUp" aria-label="Scroll up">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><polyline points="6,15 12,9 18,15"/></svg>
-                <span data-en="Back to top" data-tn="Ù„Ù„Ø£Ø¹Ù„Ù‰">Back to top</span>
+                <span data-en="Back to top" data-tn="للأعلى">Back to top</span>
             </button>
 
             <div class="feedback-stack" id="feedbackStack">
@@ -437,12 +438,12 @@
                     <div class="feedback-name">Karim</div>
                     <div class="feedback-company">Digipress</div>
                     <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-                        <button class="voice-play-btn" aria-label="Play">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
                             <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
                             <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                         </button>
-                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                        <span class="voice-duration">0:00</span>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
                         <audio preload="metadata"></audio>
                     </div>
                     <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
@@ -453,12 +454,12 @@
                     <div class="feedback-name">Amine</div>
                     <div class="feedback-company">Kadouline</div>
                     <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-                        <button class="voice-play-btn" aria-label="Play">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
                             <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
                             <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                         </button>
-                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                        <span class="voice-duration">0:00</span>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
                         <audio preload="metadata"></audio>
                     </div>
                     <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
@@ -469,12 +470,12 @@
                     <div class="feedback-name">Salim</div>
                     <div class="feedback-company">Rabhani</div>
                     <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-                        <button class="voice-play-btn" aria-label="Play">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
                             <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
                             <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                         </button>
-                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                        <span class="voice-duration">0:00</span>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
                         <audio preload="metadata"></audio>
                     </div>
                     <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
@@ -485,12 +486,12 @@
                     <div class="feedback-name">Amina</div>
                     <div class="feedback-company">AM Fashion</div>
                     <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-                        <button class="voice-play-btn" aria-label="Play">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
                             <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
                             <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                         </button>
-                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                        <span class="voice-duration">0:00</span>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
                         <audio preload="metadata"></audio>
                     </div>
                     <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
@@ -501,12 +502,12 @@
                     <div class="feedback-name">Osama</div>
                     <div class="feedback-company">SOS Village d'enfants</div>
                     <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-                        <button class="voice-play-btn" aria-label="Play">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
                             <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
                             <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                         </button>
-                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                        <span class="voice-duration">0:00</span>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
                         <audio preload="metadata"></audio>
                     </div>
                     <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
@@ -517,12 +518,12 @@
                     <div class="feedback-name">Sana</div>
                     <div class="feedback-company">Rouayam Voyage Sfax</div>
                     <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-                        <button class="voice-play-btn" aria-label="Play">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
                             <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
                             <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                         </button>
-                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                        <span class="voice-duration">0:00</span>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
                         <audio preload="metadata"></audio>
                     </div>
                     <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
@@ -532,7 +533,7 @@
 
             <button class="fb-scroll-btn" id="fbScrollBtn" aria-label="Scroll to next">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><polyline points="6,9 12,15 18,9"/></svg>
-                <span data-en="Scroll for more" data-tn="Ù…Ø±Ø± Ù„Ù„Ù…Ø²ÙŠØ¯">Scroll for more</span>
+                <span data-en="Scroll for more" data-tn="مرر للمزيد">Scroll for more</span>
             </button>
         </div>
     </section>

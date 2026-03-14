@@ -1554,23 +1554,6 @@ footer p { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
     z-index: 1;
     transition: box-shadow 0.3s;
 }
-
-
-    to   { transform: scale(0.94) translateY(-10px); opacity: 0.75; }
-}
-
-
-.feedback-stack .feedback-card {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    flex-shrink: 0;
-    background: #0d1525 !important;
-    border-color: rgba(255,255,255,0.12);
-    opacity: 1 !important;
-    margin-bottom: 1rem;
-    z-index: 1;
-    transition: box-shadow 0.3s;
-}
 .fb-scroll-btn {
     display: flex;
     align-items: center;
@@ -1649,5 +1632,4 @@ footer p { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
 
 @media (max-width: 600px) {
     .feedback-stack { max-height: 300px; }
-}
 }
