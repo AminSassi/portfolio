@@ -248,6 +248,8 @@ const previewObserver = new IntersectionObserver((entries) => {
             try { video.currentTime = 0.01; } catch (err) {}
             video.play().catch(() => {});
         } else {
+            // Reset to the beginning so the thumbnail doesn't show a random ending frame.
+            try { video.currentTime = 0.01; } catch (err) {}
             video.pause();
         }
     });
