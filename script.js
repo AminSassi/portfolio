@@ -1,10 +1,17 @@
 // Language Switcher
-const langButtons = document.querySelectorAll('.lang-btn');
 const body = document.body;
+const translatableElements = Array.from(document.querySelectorAll('[data-en]'));
+
+function updateLanguageUI(lang) {
+    const prev = document.querySelector('.chooseLang .chosen');
+    if (prev) prev.classList.remove('chosen');
+    const next = document.querySelector(`.chooseLang .${lang}-lang`);
+    if (next) next.classList.add('chosen');
+}
 
 function switchLanguage(lang) {
     // Update all elements with language data attributes
-    document.querySelectorAll('[data-en]').forEach(element => {
+    translatableElements.forEach(element => {
         if (element.hasAttribute(`data-${lang}`)) {
             element.textContent = element.getAttribute(`data-${lang}`);
         }
@@ -21,13 +28,8 @@ function switchLanguage(lang) {
         body.setAttribute('dir', 'ltr');
     }
 
-    // Update active button
-    langButtons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.lang === lang) {
-            btn.classList.add('active');
-        }
-    });
+    // Update the picker UI
+    updateLanguageUI(lang);
 
     // Save preference (may be blocked in strict privacy modes)
     try {
@@ -37,12 +39,10 @@ function switchLanguage(lang) {
     }
 }
 
-// Add click listeners to language buttons
-langButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        switchLanguage(button.dataset.lang);
-    });
-});
+// Language picker click handler (no animation)
+function changeLang(lang) {
+    switchLanguage(lang);
+}
 
 // Load saved language preference (might be blocked by privacy settings)
 let savedLang = 'en';
@@ -52,6 +52,13 @@ try {
     /* ignore */
 }
 switchLanguage(savedLang);
+
+// Footer year auto-update
+const footerYear = document.querySelector('footer p');
+if (footerYear) {
+    const year = new Date().getFullYear();
+    footerYear.textContent = footerYear.textContent.replace(/\d{4}/, year);
+}
 
 // Mobile Menu Toggle
 const menuToggle = document.getElementById('menuToggle');
@@ -158,6 +165,63 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// Testimonials carousel
+(function () {
+    const track = document.querySelector('.carousel-track');
+    if (!track) return;
+
+    const cards = Array.from(track.querySelectorAll('.testimonial-card'));
+    const prevBtn = document.querySelector('.carousel-nav.prev');
+    const nextBtn = document.querySelector('.carousel-nav.next');
+    let currentIndex = 0;
+
+    const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+    if (isRTL) track.style.flexDirection = 'row-reverse';
+
+    function updateCarousel() {
+        const container = track.parentElement;
+        const containerWidth = container.clientWidth;
+        const maxOffset = Math.max(0, track.scrollWidth - containerWidth);
+
+        const effectiveIndex = isRTL ? cards.length - 1 - currentIndex : currentIndex;
+        const activeCard = cards[effectiveIndex];
+        const cardCenter = activeCard.offsetLeft + activeCard.offsetWidth / 2;
+
+        // Center the active card in the visible area (allow whitespace at ends)
+        const desired = cardCenter - containerWidth / 2;
+        const clamped = Math.max(0, Math.min(maxOffset, desired));
+        track.style.transform = `translateX(-${clamped}px)`;
+
+        cards.forEach((card, idx) => {
+            card.classList.toggle('active', idx === effectiveIndex);
+        });
+    }
+
+    function clampIndex(idx) {
+        if (idx < 0) return cards.length - 1;
+        if (idx >= cards.length) return 0;
+        return idx;
+    }
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = clampIndex(currentIndex + (isRTL ? 1 : -1));
+        updateCarousel();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = clampIndex(currentIndex + (isRTL ? -1 : 1));
+        updateCarousel();
+    });
+
+    // Resize-aware transform update
+    window.addEventListener('resize', () => {
+        requestAnimationFrame(updateCarousel);
+    });
+
+    // Start with first card active
+    updateCarousel();
+})();
 
 // ── Optimised Cursor (RAF only on move, not infinite loop) ──
 const cursor = document.getElementById('glassCursor');

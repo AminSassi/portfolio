@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,7 @@
     <title>Amin Sassi - Video Editor & Creative Storyteller</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules/flag-icons/css/flag-icons.min.css">
 </head>
 <body>
 
@@ -151,13 +152,26 @@
             <div class="nav-right" id="navRight">
                 <ul id="navMenu">
                     <li><a href="#home" data-en="Home" data-tn="الصفحة الرئيسية">Home</a></li>
-                    <li><a href="#about" data-en="About" data-tn="نبذة عني">About</a></li>
-                    <li><a href="#portfolio" data-en="Portfolio" data-tn="أعمالي">Portfolio</a></li>
-                    <li><a href="#contact" data-en="Contact" data-tn="تواصل معايا">Contact</a></li>
+                    <li><a href="#about" data-en="About" data-tn="من أنا">About</a></li>
+                    <li><a href="#portfolio" data-en="Portfolio" data-tn="أعمالي">Portfolio</a></li>                    <li><a href="#testimonials" data-en="Testimonials" data-tn="آراء العملاء">Testimonials</a></li>                    <li><a href="#contact" data-en="Contact" data-tn="تواصل معايا">Contact</a></li>
                 </ul>
-                <div class="language-switcher">
-                    <button class="lang-btn active" data-lang="en">English</button>
-                    <button class="lang-btn" data-lang="tn">تونسي</button>
+                <div class="lang-picker" id="langPicker">
+                    <button class="lang-trigger" id="langTrigger" aria-label="Change language" aria-expanded="false">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <span id="en-lang" class="lang en-lang chosen" onclick="changeLang('en')" aria-label="English">
+                            <span class="fi fi-gb-eng"></span>
+                            <span class="lang-label">English</span>
+                        </span>
+                        <span id="tn-lang" class="lang tn-lang" onclick="changeLang('tn')" aria-label="Tunisian Arabic">
+                            <span class="fi fi-tn"></span>
+                            <span class="lang-label">العربية</span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -165,12 +179,60 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 data-en="Amin Sassi" data-tn="أمين ساسي">Amin Sassi</h1>
-                <p class="tagline">
-                    <span class="accent-text" data-en="Video Editor" data-tn="مونتير فيديو">Video Editor</span>
-                    <span data-en=" | Creative Storyteller | Freelance Projects" data-tn=" | صانع محتوى إبداعي | مشاريع مستقلة"> | Creative Storyteller | Freelance Projects</span>
+        <div class="hero-cinematic">
+
+            <!-- Floating Adobe icons -->
+            <div class="hero-icon hero-icon-ae" aria-hidden="true">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="72" height="72">
+                    <defs>
+                        <linearGradient id="hi-ae" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1a006e"/><stop offset="100%" stop-color="#00003a"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100" height="100" rx="18" fill="url(#hi-ae)" stroke="#9999ff" stroke-width="2" stroke-opacity="0.6"/>
+                    <text x="50" y="68" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="46" font-weight="900" fill="#9999FF" letter-spacing="-2">Ae</text>
+                </svg>
+            </div>
+            <div class="hero-icon hero-icon-pr" aria-hidden="true">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="60" height="60">
+                    <defs>
+                        <linearGradient id="hi-pr" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3d0070"/><stop offset="100%" stop-color="#1a0038"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100" height="100" rx="18" fill="url(#hi-pr)" stroke="#e0a0ff" stroke-width="2" stroke-opacity="0.6"/>
+                    <text x="50" y="68" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="46" font-weight="900" fill="#E0A0FF" letter-spacing="-2">Pr</text>
+                </svg>
+            </div>
+            <div class="hero-icon hero-icon-ps" aria-hidden="true">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="56" height="56">
+                    <defs>
+                        <linearGradient id="hi-ps" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#002d55"/><stop offset="100%" stop-color="#00101f"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100" height="100" rx="18" fill="url(#hi-ps)" stroke="#31a8ff" stroke-width="2" stroke-opacity="0.6"/>
+                    <text x="50" y="68" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-size="46" font-weight="900" fill="#31A8FF" letter-spacing="-2">Ps</text>
+                </svg>
+            </div>
+
+            <!-- Portrait -->
+            <div class="hero-portrait">
+                <img src="your-photo.png" alt="Amin Sassi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="hero-portrait-fallback">AS</div>
+            </div>
+
+            <!-- Text overlay -->
+            <div class="hero-overlay-text">
+                <h1>
+                    <span class="hero-name" data-en="Amin Sassi" data-tn="أمين ساسي">Amin Sassi</span>
+                    <span class="hero-role">
+                        <span data-en="Video Editor" data-tn="مونتير فيديو">Video Editor</span>
+                    </span>
+                </h1>
+                <p class="hero-tagline">
+                    <span class="hero-tagline-top" data-en="CRAFTING STORIES" data-tn="نصنع القصص">CRAFTING STORIES</span><br>
+                    <span data-en="That captivate and inspire." data-tn="التي تشدّ وتلهِم.">That captivate and inspire.</span>
                 </p>
                 <div class="cta-group">
                     <a href="#portfolio" class="cta-button">
@@ -182,12 +244,7 @@
                     </a>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="profile-circle">
-                    <img src="your-photo.png" alt="Amin Sassi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="profile-placeholder" style="display: none;">AS</div>
-                </div>
-            </div>
+
         </div>
     </section>
 
@@ -195,7 +252,7 @@
     <section class="stats-section">
         <div class="stats-container">
             <div class="stat-card">
-                <div class="stat-number" data-en="20+" data-tn="50+">50+</div>
+                <div class="stat-number" data-en="20+" data-tn="20+">20+</div>
                 <div class="stat-label" data-en="Projects Completed" data-tn="مشاريع كمّلتهم">Projects Completed</div>
             </div>
             <div class="stat-card">
@@ -203,7 +260,7 @@
                 <div class="stat-label" data-en="Client Satisfaction" data-tn="رضى الحرفاء">Client Satisfaction</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" data-en="2+" data-tn="5+">5+</div>
+                <div class="stat-number" data-en="2+" data-tn="2+">2+</div>
                 <div class="stat-label" data-en="Years Experience" data-tn="سنين خبرة">Years Experience</div>
             </div>
         </div>
@@ -211,16 +268,12 @@
 
     <!-- About Section -->
     <section id="about">
-        <h2 data-en="About Me" data-tn="نبذة عني">About Me</h2>
+        <h2 data-en="About Me" data-tn="من أنا">About Me</h2>
         <p class="section-subtitle" data-en="Crafting visual stories that captivate and inspire" data-tn="نخلق قصص بصريّة تشدّ وتلهِم">Crafting visual stories that captivate and inspire</p>
         <div class="about-content">
             <div class="about-text">
-                <p data-en="I'm an intermediate video editor with a passion for creative storytelling and visual narratives. Currently working on free projects to build my portfolio, I bring dedication and creativity to every frame." data-tn="أنا مونتير فيديو في مستوى متوسط ونحب نحكي قصص بطريقة إبداعية وبأسلوب بصري. توا نخدم على مشاريع مجانية باش نكبّر البورتفوليو متاعي، ونقدّم تركيز وإبداع في كل لقطة.">
-                    I'm an intermediate video editor with a passion for creative storytelling and visual narratives. Currently working on free projects to build my portfolio, I bring dedication and creativity to every frame.
-                </p>
-                <p data-en="My approach combines technical precision with artistic vision, transforming raw footage into compelling stories that resonate with audiences. Whether it's a documentary, commercial, or creative project, I focus on delivering high-quality results that exceed expectations." data-tn="الطريقة متاعي تجمع بين الدقة التقنية والرؤية الفنية، ونحوّل المواد الخام إلى قصص تلامس الناس. سواء كان فيلم وثائقي ولا إعلان ولا مشروع إبداعي، نركّز على تقديم نتائج بجودة عالية وتفوّت التوقعات.">
-                    My approach combines technical precision with artistic vision, transforming raw footage into compelling stories that resonate with audiences. Whether it's a documentary, commercial, or creative project, I focus on delivering high-quality results that exceed expectations.
-                </p>
+                <p data-en="Hey, I’m Mohamed Amin Ben Sassi — a Creative Video Editor & Multimedia Specialist with over 2 years of experience in creating meaningful visual content, where I produce media that aligns with values and purpose." data-tn="مرحباً، أنا محمد أمين بن ساسي — مونتير فيديو ومتخصص وسائط متعددة بخبرة تزيد عن سنتين في إنتاج محتوى بصري ذو معنى، حيث أُنتج وسائط تتوافق مع القيم والهدف."></p>
+                <p data-en="I’ve worked on projects covering Video editing, Motion graphics, Directing, Videography, and 3D art. My expertise includes Adobe Premiere, After Effects, Illustrator, Blender, and Photoshop. I’ve been working on my YouTube channel as a hobby since 2017." data-tn="عملت على مشاريع تشمل المونتاج، الجرافيك المتحرك، الإخراج، التصوير، والفن ثلاثي الأبعاد. أمتلك خبرة في Adobe Premiere وAfter Effects وIllustrator وBlender وPhotoshop. أعمل على قناتي في اليوتيوب كهواية منذ 2017."></p>
             </div>
             <div class="skills-grid">
                 <div class="skill-item">
@@ -231,14 +284,7 @@
                     <h3 data-en="Motion Graphics" data-tn="الموشن جرافيكس">Motion Graphics</h3>
                     <p data-en="After Effects, kinetic typography, visual effects" data-tn="After Effects, الطايبوجرافي المتحرك، المؤثرات البصرية">After Effects, kinetic typography, visual effects</p>
                 </div>
-                <div class="skill-item">
-                    <h3 data-en="Color Correction" data-tn="تصحيح الألوان">Color Correction</h3>
-                    <p data-en="DaVinci Resolve, color grading, cinematic looks" data-tn="DaVinci Resolve, تدريج الألوان، المظهر السينمائي">DaVinci Resolve, color grading, cinematic looks</p>
-                </div>
-                <div class="skill-item">
-                    <h3 data-en="Storytelling" data-tn="سرد القصص">Storytelling</h3>
-                    <p data-en="Narrative structure, pacing, emotional impact" data-tn="هيكل السرد، الإيقاع، التأثير العاطفي">Narrative structure, pacing, emotional impact</p>
-                </div>
+
             </div>
         </div>
     </section>
@@ -249,20 +295,6 @@
     <p class="section-subtitle" data-en="A collection of my recent video projects" data-tn="مجموعة من آخر مشاريع الفيديو متاعي">A collection of my recent video projects</p>
     <div class="portfolio-grid">
 
-        <!-- Item 1: DJ Amir -->
-        <div class="portfolio-item">
-            <div class="video-wrapper" data-video="https://res.cloudinary.com/dldy0enia/video/upload/v1773029152/DJAMIR_f6rg4q.mp4">
-                <video class="video-preview" src="preview5.mp4" loop muted playsinline preload="metadata"></video>
-                <div class="play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
-            </div>
-            <div class="portfolio-info">
-                <h3 data-en="DJ Merch Edit" data-tn="مونتاج Merch متاع DJ">DJ Merch Edit</h3>
-                <p data-en="A high-energy edit featuring a DJ and his crew showcasing new merch with fast cuts and rhythmic transitions."
-                   data-tn="مونتاج نشيط فيه DJ وصحابو يورّيو Merch جديدة مع قصّات سريعة وانتقالات مع الإيقاع.">
-                   A high-energy edit featuring a DJ and his crew showcasing new merch with fast cuts and rhythmic transitions.
-                </p>
-            </div>
-        </div>
 
         <!-- Item 2: Timeline / Loyalty App -->
         <div class="portfolio-item">
@@ -316,7 +348,7 @@
                 <div class="play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
             </div>
             <div class="portfolio-info">
-                <h3 data-en="Digipress Brand Video" data-tn="فيديو علامة Digipress">Digipress Brand Video</h3>
+                <h3 data-en="Digipress Brand Video" data-tn="فيديو المعصرة الذكية Digipress">Digipress Brand Video</h3>
                 <p data-en="A brand video with clean editing, motion graphics, and strong visual storytelling."
                    data-tn="فيديو علامة تجارية بمونتاج نظيف وموشن جرافيكس وسرد بصري جذاب.">
                    A brand video with clean editing, motion graphics, and strong visual storytelling.
@@ -387,7 +419,142 @@
     </div>
 </section>
 
+    <!-- Client Feedback Section -->
+    <section id="testimonials" class="feedback-section">
+        <h2 data-en="Client Feedback" data-tn="Ø¢Ø±Ø§Ø¡ Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡">Client Feedback</h2>
+        <p class="section-subtitle" data-en="Hear directly from the brands I've worked with" data-tn="Ø§Ø³Ù…Ø¹ Ù…Ø¨Ø§Ø´Ø±Ø© Ù…Ù† Ø¹Ù…Ù„Ø§Ø¦ÙŠ">Hear directly from the brands I've worked with</p>
+
+        <div class="feedback-stack-outer" id="feedbackOuter">
+            <button class="fb-scroll-up" id="fbScrollUp" aria-label="Scroll up">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><polyline points="6,15 12,9 18,15"/></svg>
+                <span data-en="Back to top" data-tn="Ù„Ù„Ø£Ø¹Ù„Ù‰">Back to top</span>
+            </button>
+
+            <div class="feedback-stack" id="feedbackStack">
+
+                <div class="feedback-card" style="--i:0">
+                    <div class="feedback-avatar">K</div>
+                    <div class="feedback-name">Karim</div>
+                    <div class="feedback-company">Digipress</div>
+                    <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
+                            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
+                            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                        </button>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                        
+                        <audio preload="metadata"></audio>
+                    </div>
+                    <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                </div>
+
+                <div class="feedback-card" style="--i:1">
+                    <div class="feedback-avatar">A</div>
+                    <div class="feedback-name">Amin</div>
+                    <div class="feedback-company">Kadouline</div>
+                    <div class="voice-player" data-src="https://res.cloudinary.com/dldy0enia/video/upload/v1773528536/kadolinevs_hscsky.mp3">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
+                            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
+                            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                        </button>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                        
+                        <audio preload="metadata"></audio>
+                    </div>
+                    <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                </div>
+
+                <div class="feedback-card" style="--i:2">
+                    <div class="feedback-avatar">S</div>
+                    <div class="feedback-name">Salim</div>
+                    <div class="feedback-company">Rabhani</div>
+                    <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
+                            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
+                            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                        </button>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                        
+                        <audio preload="metadata"></audio>
+                    </div>
+                    <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                </div>
+
+                <div class="feedback-card" style="--i:3">
+                    <div class="feedback-avatar">Am</div>
+                    <div class="feedback-name">Amina</div>
+                    <div class="feedback-company">AM Fashion</div>
+                    <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
+                            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
+                            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                        </button>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                        
+                        <audio preload="metadata"></audio>
+                    </div>
+                    <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                </div>
+
+                <div class="feedback-card" style="--i:4">
+                    <div class="feedback-avatar">O</div>
+                    <div class="feedback-name">Osama</div>
+                    <div class="feedback-company">SOS Village d'enfants</div>
+                    <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
+                            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
+                            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                        </button>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                        
+                        <audio preload="metadata"></audio>
+                    </div>
+                    <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                </div>
+
+                <div class="feedback-card" style="--i:5">
+                    <div class="feedback-avatar">Sn</div>
+                    <div class="feedback-name">Sana</div>
+                    <div class="feedback-company">Rouayam Voyage Sfax</div>
+                    <div class="voice-player" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                        <div class="voice-controls"><button class="voice-play-btn" aria-label="Play">
+                            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="6,3 20,12 6,21"/></svg>
+                            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                        </button>
+                        <span class="voice-duration">0:00</span></div>
+                        <div class="voice-waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                        
+                        <audio preload="metadata"></audio>
+                    </div>
+                    <div class="feedback-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                </div>
+
+            </div>
+
+            <button class="fb-scroll-btn" id="fbScrollBtn" aria-label="Scroll to next">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><polyline points="6,9 12,15 18,9"/></svg>
+                <span data-en="Scroll for more" data-tn="Ù…Ø±Ø± Ù„Ù„Ù…Ø²ÙŠØ¯">Scroll for more</span>
+            </button>
         </div>
+    </section>
+ <!-- YouTube Channel Promo -->
+    <section id="youtube" class="youtube-section">
+        <h2 data-en="Watch on YouTube" data-tn="قناتي على يوتيوب">Watch on YouTube</h2>
+        <div class="youtube-preview">
+            <a class="youtube-link" href="https://www.youtube.com/@amiinsassii" target="_blank" rel="noopener noreferrer">
+                <div class="video-wrapper youtube-wrapper">
+                    <video class="video-preview" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" poster="https://via.placeholder.com/720x400/111822/ffffff?text=YouTube+Preview" loop muted playsinline preload="metadata"></video>
+                    <div class="play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
+                    <span class="youtube-badge">▶ YouTube</span>
+                </div>
+            </a>
+        </div>
+        <p class="youtube-note" data-en="Refine it — all thumbnails, videos, ideas are done by me." data-tn="كل الصور المصغرة، الفيديوهات والأفكار من عندي.">Refine it — all thumbnails, videos, ideas are done by me.</p>
     </section>
 
     <!-- Video Modal -->
@@ -441,7 +608,7 @@
 
     <!-- Footer -->
     <footer>
-        <p data-en="© 2024 Amin Sassi. All rights reserved. | Video Editor & Creative Storyteller" data-tn="© 2024 أمين الساسي. كل الحقوق محفوظة | مونتير فيديو وصانع محتوى إبداعي">© 2024 Amin Sassi. All rights reserved. | Video Editor & Creative Storyteller</p>
+        <p data-en="© 2025 Amin Sassi. All rights reserved. | Video Editor &amp; Creative Storyteller" data-tn="© 2025 أمين الساسي. كل الحقوق محفوظة | مونتير فيديو وصانع محتوى إبداعي">© 2025 Amin Sassi. All rights reserved. | Video Editor &amp; Creative Storyteller</p>
     </footer>
 
     <!-- Back to Top Button -->
@@ -450,3 +617,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+

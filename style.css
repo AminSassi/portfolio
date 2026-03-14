@@ -47,6 +47,9 @@ body[dir="rtl"] {
 body[dir="rtl"] .hero-text h1 {
     letter-spacing: normal;
     text-align: right;
+    line-height: 1.15;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
 }
 
 /* ── Static Aurora Background (no animation = no paint cost) ── */
@@ -181,48 +184,53 @@ nav ul a::after {
 nav ul a:hover { color: #fff; }
 nav ul a:hover::after { width: 100%; }
 
-/* ── Language Switcher — Liquid Glass Pill ── */
-.language-switcher {
+/* ── Language Picker Popup (Choose Lang) ── */
+.chooseLang {
     display: flex;
-    gap: 0.25rem;
-    background: rgba(255,255,255,0.07);
-    padding: 0.3rem;
-    border-radius: 50px;
-    border: 1px solid rgba(255,255,255,0.14);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 10px rgba(0,0,0,0.25);
+    align-items: center;
+    justify-content: center;
 }
 
-.language-switcher button {
-    padding: 0.4rem 1rem;
-    background: transparent;
-    color: rgba(255,255,255,0.55);
-    border: none;
-    border-radius: 50px;
-    cursor: none;
-    font-weight: 600;
-    font-size: 0.82rem;
-    letter-spacing: 0.3px;
-    transition: all 0.3s var(--spring);
-    font-family: inherit;
+.chooseLang div {
+    display: flex;
+    gap: 10px;
 }
 
-.language-switcher button.active {
-    background: rgba(255,255,255,0.18);
-    color: #fff;
-    box-shadow:
-        0 2px 12px rgba(0,0,0,0.25),
-        inset 0 1px 0 rgba(255,255,255,0.3),
-        inset 0 -1px 0 rgba(0,0,0,0.1);
+.chooseLang .lang {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 55%;
+    border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 12px 22px rgba(0,0,0,0.2);
+    background: rgba(255,255,255,0.06);
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.language-switcher button:hover:not(.active) { color: rgba(255,255,255,0.85); }
+.chooseLang .lang:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.5);
+}
+
+.chooseLang .chosen {
+    border-color: rgba(160,210,255,0.9);
+    background: rgba(255,255,255,0.15);
+}
+
+.chooseLang .lang .fi {
+    font-size: 1.4rem;
+    line-height: 1;
+}
 
 /* ── Mobile Menu Toggle ── */
 .menu-toggle {
     display: none;
     flex-direction: column;
     gap: 5px;
-    cursor: none;
+    cursor: pointer;
     padding: 6px;
     border-radius: 10px;
     transition: background 0.2s;
@@ -373,18 +381,186 @@ nav ul a:hover::after { width: 100%; }
     animation: glassRevealRight 1.2s var(--smooth) 0.2s both;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+    /* ── Testimonials Carousel ── */
+    .testimonials-section {
+        padding: 8rem 2rem 6rem;
+        position: relative;
+        background: rgba(255,255,255,0.02);
+        backdrop-filter: blur(20px);
+        border-radius: 28px;
+        max-width: 1300px;
+        margin: 4rem auto;
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
 
-/* ── Profile Circle — Liquid Glass Ring ── */
-.profile-circle {
-    width: 380px;
-    height: 380px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(20px);
+    /* Ensure RTL layouts fully flip */
+    body[dir="rtl"] {
+        direction: rtl;
+    }
+
+    body[dir="rtl"] .testimonial-carousel {
+        direction: rtl;
+    }
+
+    body[dir="rtl"] .testimonial-card,
+    body[dir="rtl"] .portfolio-item {
+        direction: rtl;
+        text-align: right;
+    }
+
+    .testimonials-section h2 {
+        text-align: center;
+        margin-bottom: 0.75rem;
+    }
+
+    .testimonials-section .section-subtitle {
+        text-align: center;
+        margin-bottom: 3.5rem;
+    }
+
+    .testimonial-carousel {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 0 2rem;
+    }
+
+    .carousel-track {
+        display: flex;
+        gap: 2rem;
+        transition: transform 0.45s ease;
+        will-change: transform;
+        padding-bottom: 1rem;
+    }
+
+    .testimonial-card {
+        min-width: 320px;
+        max-width: 360px;
+        padding: 2rem;
+        border-radius: 24px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.12);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+        position: relative;
+        transform: scale(0.92);
+        opacity: 0.58;
+        transition: transform 0.45s ease, opacity 0.45s ease;
+    }
+
+    .testimonial-card.active {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .testimonial-head {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .testimonial-logo {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.15);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: rgba(255,255,255,0.9);
+        border: 1px solid rgba(255,255,255,0.16);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    }
+
+    .testimonial-card h3 {
+        margin: 0 0 0.2rem;
+        font-size: 1.2rem;
+    }
+
+    .testimonial-card p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.65;
+        color: rgba(255,255,255,0.78);
+    }
+
+    .testimonial-rating {
+        margin-top: 1.3rem;
+        font-weight: 600;
+        color: rgba(255,255,255,0.9);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .testimonial-rating .stars {
+        color: #ffd54f;
+        letter-spacing: -0.1em;
+        font-size: 1.05rem;
+    }
+
+    .carousel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.25);
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        font-size: 1.6rem;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: transform 0.2s ease, background 0.2s ease;
+        z-index: 2;
+    }
+
+    .carousel-nav:hover {
+        transform: translateY(-50%) scale(1.06);
+        background: rgba(0,0,0,0.65);
+    }
+
+    .carousel-nav.prev {
+        left: 1rem;
+    }
+
+    .carousel-nav.next {
+        right: 1rem;
+    }
+
+    @media (max-width: 880px) {
+        .testimonial-card {
+            min-width: 280px;
+        }
+
+        .carousel-nav {
+            width: 40px;
+            height: 40px;
+            font-size: 1.3rem;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .testimonials-section {
+            margin: 2rem 1rem;
+            padding: 4.5rem 1.25rem 3rem;
+        }
+
+        .carousel-track {
+            gap: 1rem;
+        }
+
+        .carousel-nav {
+            display: none;
+        }
+    }
     display: flex;
     align-items: center;
     justify-content: center;
@@ -853,6 +1029,69 @@ section .section-subtitle {
     color: #fff;
     transform: translateY(-5px) scale(1.1);
     box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+}
+
+/* ── YouTube Channel Promo ── */
+.youtube-section {
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    background: rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.youtube-section h2 {
+    font-size: 2.6rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -1px;
+}
+
+.youtube-section .section-subtitle {
+    max-width: 720px;
+    margin: 0 auto 2.5rem;
+    color: rgba(255,255,255,0.6);
+}
+
+.youtube-preview {
+    max-width: 920px;
+    margin: 0 auto 1.5rem;
+}
+
+.youtube-link {
+    display: block;
+    text-decoration: none;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+}
+
+.youtube-wrapper {
+    position: relative;
+    aspect-ratio: 16 / 9;
+}
+
+.youtube-badge {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    background: rgba(255,0,0,0.9);
+    color: #fff;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.youtube-note {
+    max-width: 760px;
+    margin: 0 auto;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    letter-spacing: 0.1px;
 }
 
 /* ── Coming Soon placeholder ── */
