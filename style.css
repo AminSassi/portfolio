@@ -43,6 +43,12 @@ body[dir="rtl"] {
     font-family: 'Cairo', sans-serif;
 }
 
+/* Arabic text should render with proper shaping and spacing */
+body[dir="rtl"] .hero-text h1 {
+    letter-spacing: normal;
+    text-align: right;
+}
+
 /* ── Static Aurora Background (no animation = no paint cost) ── */
 body::before {
     content: '';

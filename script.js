@@ -10,10 +10,14 @@ function switchLanguage(lang) {
         }
     });
 
-    // Change direction for Tunisian
+    // Change direction for Tunisian and ensure the HTML root is updated too
     if (lang === 'tn') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
         body.setAttribute('dir', 'rtl');
     } else {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
         body.setAttribute('dir', 'ltr');
     }
 
@@ -205,7 +209,10 @@ document.querySelectorAll('.video-wrapper[data-video]').forEach(wrapper => {
         document.querySelectorAll('.video-preview').forEach(v => v.pause());
 
         modalVideo.src = src;
-        modalVideo.play();
+        // Reset to the start frame so the modal doesn't briefly show the previous clip.
+        try { modalVideo.currentTime = 0.01; } catch (err) {}
+        modalVideo.load();
+        modalVideo.play().catch(() => {});
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         document.body.classList.add('modal-open');
@@ -237,6 +244,8 @@ const previewObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         const video = entry.target;
         if (entry.isIntersecting) {
+            // Always start from the first frame so the preview matches the source.
+            try { video.currentTime = 0.01; } catch (err) {}
             video.play().catch(() => {});
         } else {
             video.pause();
@@ -246,10 +255,17 @@ const previewObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.video-preview').forEach(video => {
     // Ensure the preview stays hidden until it has at least one frame ready.
-    if (video.readyState >= 3) {
+    const markLoaded = () => {
+        // Seek just past the start so we get the first decoded frame (often a keyframe).
+        try { video.currentTime = 0.01; } catch (err) {}
         video.classList.add('loaded');
+        video.pause();
+    };
+
+    if (video.readyState >= 3) {
+        markLoaded();
     } else {
-        video.addEventListener('loadeddata', () => video.classList.add('loaded'), { once: true });
+        video.addEventListener('loadeddata', markLoaded, { once: true });
     }
 
     previewObserver.observe(video);
