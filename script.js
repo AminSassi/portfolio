@@ -200,10 +200,15 @@ const modalClose = document.getElementById('modalClose');
 document.querySelectorAll('.video-wrapper[data-video]').forEach(wrapper => {
     wrapper.addEventListener('click', () => {
         const src = wrapper.dataset.video;
+
+        // Stop preview videos while the modal is open to reduce CPU/GPU load
+        document.querySelectorAll('.video-preview').forEach(v => v.pause());
+
         modalVideo.src = src;
         modalVideo.play();
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.body.classList.add('modal-open');
     });
 });
 
@@ -212,11 +217,36 @@ function closeModal() {
     modalVideo.pause();
     modalVideo.src = '';
     document.body.style.overflow = '';
+    document.body.classList.remove('modal-open');
+
+    // Resume preview videos after closing the modal
+    document.querySelectorAll('.video-preview').forEach(v => {
+        v.play().catch(() => {
+            // Some browsers may block autoplay; it's ok.
+        });
+    });
 }
 
 modalClose.addEventListener('click', closeModal);
 modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Only play preview videos when they are visible on-screen.
+// This reduces CPU/GPU load when many previews exist offscreen.
+const previewObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+            video.play().catch(() => {});
+        } else {
+            video.pause();
+        }
+    });
+}, { threshold: 0.4 });
+
+document.querySelectorAll('.video-preview').forEach(video => {
+    previewObserver.observe(video);
+});
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
