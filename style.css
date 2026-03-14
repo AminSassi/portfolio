@@ -694,6 +694,16 @@ section .section-subtitle {
     display: block;
 }
 
+/* When the preview video is still loading, hide the first frame to avoid flicker */
+.video-preview {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.video-preview.loaded {
+    opacity: 1;
+}
+
 .video-modal-close {
     position: absolute;
     top: 14px;

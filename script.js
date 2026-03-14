@@ -245,6 +245,13 @@ const previewObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 
 document.querySelectorAll('.video-preview').forEach(video => {
+    // Ensure the preview stays hidden until it has at least one frame ready.
+    if (video.readyState >= 3) {
+        video.classList.add('loaded');
+    } else {
+        video.addEventListener('loadeddata', () => video.classList.add('loaded'), { once: true });
+    }
+
     previewObserver.observe(video);
 });
 
