@@ -1,11 +1,10 @@
-// Language Switcher
+﻿// Language Switcher
 const body = document.body;
 const translatableElements = Array.from(document.querySelectorAll('[data-en]'));
 
 function updateLanguageUI(lang) {
-    const prev = document.querySelector('.chooseLang .chosen');
-    if (prev) prev.classList.remove('chosen');
-    const next = document.querySelector(`.chooseLang .${lang}-lang`);
+    document.querySelectorAll('.lang-picker .lang').forEach(el => el.classList.remove('chosen'));
+    const next = document.querySelector(`.lang-picker .${lang}-lang`);
     if (next) next.classList.add('chosen');
 }
 
@@ -39,9 +38,11 @@ function switchLanguage(lang) {
     }
 }
 
-// Language picker click handler (no animation)
+// Language picker toggle
 function changeLang(lang) {
     switchLanguage(lang);
+    langDropdown.classList.remove('open');
+    langTrigger.setAttribute('aria-expanded', 'false');
 }
 
 // Load saved language preference (might be blocked by privacy settings)
@@ -52,6 +53,23 @@ try {
     /* ignore */
 }
 switchLanguage(savedLang);
+
+// Lang dropdown toggle
+const langTrigger = document.getElementById('langTrigger');
+const langDropdown = document.getElementById('langDropdown');
+
+langTrigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = langDropdown.classList.toggle('open');
+    langTrigger.setAttribute('aria-expanded', isOpen);
+});
+
+document.addEventListener('click', () => {
+    langDropdown.classList.remove('open');
+    langTrigger.setAttribute('aria-expanded', 'false');
+});
+
+langDropdown.addEventListener('click', e => e.stopPropagation());
 
 // Footer year auto-update
 const footerYear = document.querySelector('footer p');
@@ -144,10 +162,22 @@ contactForm.addEventListener('submit', (e) => {
     
     // Show success message
     const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-    const successMessage = currentLang === 'en' 
-        ? 'Thank you for your message! I will get back to you soon.' 
+    const successMessage = currentLang === 'en'
+        ? 'Thank you for your message! I will get back to you soon.'
         : 'شكراً على رسالتك! باش نرجعلك بالإجابة قريب.';
-    alert(successMessage);
+    const toast = document.createElement('div');
+    Object.assign(toast.style, {
+        position: 'fixed', bottom: '2rem', left: '50%',
+        transform: 'translateX(-50%)',
+        background: 'rgba(30,40,60,0.95)', color: '#fff',
+        padding: '0.85rem 1.6rem', borderRadius: '8px',
+        fontSize: '0.95rem', zIndex: '99999',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.35)',
+        transition: 'opacity 0.4s ease'
+    });
+    toast.textContent = successMessage;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 3500);
     contactForm.reset();
 });
 
@@ -364,3 +394,126 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
     item.style.transition = `opacity 0.5s ease ${i*0.1}s, transform 0.5s ease ${i*0.1}s`;
     observer.observe(item);
 });
+
+// Voice Players
+(function () {
+    let activePair = null; // { audio, player, bars }
+
+    function fmt(s) {
+        if (!isFinite(s) || s < 0) return '0:00';
+        return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+    }
+
+    function setWave(bars, progress) {
+        var filled = Math.floor(progress * bars.length);
+        bars.forEach(function(bar, i) {
+            if (i < filled) {
+                bar.style.background = '#60b8ff';
+                bar.style.animationName = 'none';
+            } else if (i === filled) {
+                bar.style.background = '#60b8ff';
+                bar.style.animationName = 'waveBar';
+                bar.style.animationDuration = '0.7s';
+                bar.style.animationTimingFunction = 'ease-in-out';
+                bar.style.animationIterationCount = 'infinite';
+            } else {
+                bar.style.background = 'rgba(255,255,255,0.25)';
+                bar.style.animationName = 'none';
+            }
+        });
+    }
+
+    function resetWave(bars) {
+        bars.forEach(function(bar) {
+            bar.style.background = 'rgba(255,255,255,0.25)';
+            bar.style.animationName = 'none';
+        });
+    }
+
+    function stopActive() {
+        if (!activePair) return;
+        activePair.audio.pause();
+        activePair.player.querySelector('.icon-play').style.display = '';
+        activePair.player.querySelector('.icon-pause').style.display = 'none';
+        resetWave(activePair.bars);
+        activePair = null;
+    }
+
+    document.querySelectorAll('.voice-player').forEach(function(player) {
+        var btn       = player.querySelector('.voice-play-btn');
+        var iconPlay  = player.querySelector('.icon-play');
+        var iconPause = player.querySelector('.icon-pause');
+        var durEl     = player.querySelector('.voice-duration');
+        var bars      = Array.from(player.querySelectorAll('.voice-waveform span'));
+        var audio     = player.querySelector('audio');
+        var src       = player.getAttribute('data-src');
+
+        // set src directly
+        audio.src = src;
+
+        audio.addEventListener('loadedmetadata', function() {
+            durEl.textContent = fmt(audio.duration);
+        });
+
+        audio.addEventListener('timeupdate', function() {
+            durEl.textContent = fmt(audio.duration - audio.currentTime);
+            if (audio.duration > 0) setWave(bars, audio.currentTime / audio.duration);
+        });
+
+        audio.addEventListener('ended', function() {
+            iconPlay.style.display  = '';
+            iconPause.style.display = 'none';
+            durEl.textContent = fmt(audio.duration);
+            resetWave(bars);
+            activePair = null;
+        });
+
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // clicking the active player = pause it
+            if (activePair && activePair.audio === audio) {
+                stopActive();
+                return;
+            }
+
+            // stop whatever else is playing
+            stopActive();
+
+            // play this one
+            audio.play().catch(function(err) { console.warn('play failed', err); });
+            iconPlay.style.display  = 'none';
+            iconPause.style.display = '';
+            activePair = { audio: audio, player: player, bars: bars };
+        });
+    });
+})();
+
+
+// -- Feedback Stack Scroll --
+(function () {
+    const stack  = document.getElementById('feedbackStack');
+    const btnDn  = document.getElementById('fbScrollBtn');
+    const btnUp  = document.getElementById('fbScrollUp');
+    if (!stack || !btnDn) return;
+
+    const cards  = Array.from(stack.querySelectorAll('.feedback-card'));
+    const cardH  = () => cards[0] ? cards[0].offsetHeight : 220;
+
+    btnDn.addEventListener('click', () => stack.scrollBy({ top:  cardH(), behavior: 'smooth' }));
+    if (btnUp) btnUp.addEventListener('click', () => stack.scrollBy({ top: -cardH(), behavior: 'smooth' }));
+
+    function updateStack() {
+        const scrollTop  = stack.scrollTop;
+        const viewH      = stack.clientHeight;
+        const atEnd      = scrollTop + viewH >= stack.scrollHeight - 8;
+        const atStart    = scrollTop < 8;
+
+        btnDn.classList.toggle('hidden', atEnd);
+        if (btnUp) btnUp.classList.toggle('visible', !atStart);
+    }
+
+    stack.addEventListener('scroll', updateStack, { passive: true });
+    updateStack();
+})();
