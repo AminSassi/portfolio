@@ -1391,6 +1391,13 @@ footer p { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
     font-weight: 700;
     color: #fff;
     letter-spacing: -0.5px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+img.feedback-avatar {
+    object-fit: cover;
+    display: block;
 }
 
 .feedback-name {
