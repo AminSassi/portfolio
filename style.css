@@ -1183,11 +1183,11 @@ section .section-subtitle {
 
 .youtube-age-badge {
     position: absolute;
-    left: calc(1rem + 90px);
+    right: 1rem;
     top: 1rem;
     background: rgba(30,30,30,0.85);
     color: #fff;
-    padding: 0.35rem 0.65rem;
+    padding: 0.35rem 0.75rem;
     border-radius: 999px;
     font-size: 0.82rem;
     font-weight: 700;
