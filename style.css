@@ -314,7 +314,7 @@ nav ul a:hover::after { width: 100%; }
 /* Portrait — centered, bottom-anchored, no circle */
 .hero-portrait {
     position: absolute;
-    bottom: 10%;
+    bottom: -5%;
     left: 50%;
     transform: translateX(-50%);
     width: clamp(800px, 108vw, 1340px);
