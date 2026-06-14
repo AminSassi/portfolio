@@ -440,25 +440,7 @@
 
                     updateCarousel();
 
-                    // Video click → modal
-                    track.querySelectorAll('.video-wrapper[data-video]').forEach(wrapper => {
-                        wrapper.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            const src = wrapper.dataset.video;
-                            document.querySelectorAll('.video-preview').forEach(v => v.pause());
-                            const modalVideo = document.getElementById('modalVideo');
-                            const modal = document.getElementById('videoModal');
-                            modalVideo.src = src;
-                            try { modalVideo.currentTime = 0.01; } catch (err) {}
-                            modalVideo.load();
-                            modalVideo.play().catch(() => {});
-                            modal.classList.add('active');
-                            document.body.style.overflow = 'hidden';
-                            document.body.classList.add('modal-open');
-                        });
-                    });
-
-                    // Init video observers
+                    // Init video observers for newly added portfolio previews
                     track.querySelectorAll('.video-preview').forEach(video => {
                         const markLoaded = () => {
                             try { video.currentTime = 0.01; } catch (err) {}
@@ -545,49 +527,6 @@
                         <div class="feedback-stars">${'&#9733;'.repeat(item.stars)}${'&#9734;'.repeat(5 - item.stars)}</div>
                     </div>
                 `).join('');
-                // Re-init voice players
-                stack.querySelectorAll('.voice-player').forEach(function(player) {
-                    var btn = player.querySelector('.voice-play-btn');
-                    var iconPlay = player.querySelector('.icon-play');
-                    var iconPause = player.querySelector('.icon-pause');
-                    var durEl = player.querySelector('.voice-duration');
-                    var bars = Array.from(player.querySelectorAll('.voice-waveform span'));
-                    var audio = player.querySelector('audio');
-                    audio.src = player.getAttribute('data-src');
-                    audio.addEventListener('loadedmetadata', function() {
-                        var s = audio.duration;
-                        durEl.textContent = (!isFinite(s) || s < 0) ? '0:00' : Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
-                    });
-                    audio.addEventListener('timeupdate', function() {
-                        var rem = audio.duration - audio.currentTime;
-                        durEl.textContent = (!isFinite(rem) || rem < 0) ? '0:00' : Math.floor(rem / 60) + ':' + String(Math.floor(rem % 60)).padStart(2, '0');
-                        if (audio.duration > 0) {
-                            var progress = audio.currentTime / audio.duration;
-                            var filled = Math.floor(progress * bars.length);
-                            bars.forEach(function(bar, idx) {
-                                if (idx < filled) { bar.style.background = '#60b8ff'; bar.style.animationName = 'none'; }
-                                else if (idx === filled) { bar.style.background = '#60b8ff'; bar.style.animationName = 'waveBar'; bar.style.animationDuration = '0.7s'; bar.style.animationTimingFunction = 'ease-in-out'; bar.style.animationIterationCount = 'infinite'; }
-                                else { bar.style.background = 'rgba(255,255,255,0.25)'; bar.style.animationName = 'none'; }
-                            });
-                        }
-                    });
-                    audio.addEventListener('ended', function() {
-                        iconPlay.style.display = '';
-                        iconPause.style.display = 'none';
-                        bars.forEach(function(bar) { bar.style.background = 'rgba(255,255,255,0.25)'; bar.style.animationName = 'none'; });
-                    });
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        if (!audio.paused) { audio.pause(); iconPlay.style.display = ''; iconPause.style.display = 'none'; bars.forEach(function(bar) { bar.style.background = 'rgba(255,255,255,0.25)'; bar.style.animationName = 'none'; }); return; }
-                        document.querySelectorAll('.voice-player audio').forEach(a => { a.pause(); });
-                        document.querySelectorAll('.voice-play-btn .icon-play').forEach(p => p.style.display = '');
-                        document.querySelectorAll('.voice-play-btn .icon-pause').forEach(p => p.style.display = 'none');
-                        audio.play().catch(function() {});
-                        iconPlay.style.display = 'none';
-                        iconPause.style.display = '';
-                    });
-                });
             }
         } catch (e) { /* API unavailable, static content remains */ }
     })();

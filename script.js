@@ -38,6 +38,10 @@ function switchLanguage(lang) {
     }
 }
 
+// Lang dropdown toggle
+const langTrigger = document.getElementById('langTrigger');
+const langDropdown = document.getElementById('langDropdown');
+
 // Language picker toggle
 function changeLang(lang) {
     switchLanguage(lang);
@@ -53,10 +57,6 @@ try {
     /* ignore */
 }
 switchLanguage(savedLang);
-
-// Lang dropdown toggle
-const langTrigger = document.getElementById('langTrigger');
-const langDropdown = document.getElementById('langDropdown');
 
 langTrigger.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -195,63 +195,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
-
-// Testimonials carousel
-(function () {
-    const track = document.querySelector('.carousel-track');
-    if (!track) return;
-
-    const cards = Array.from(track.querySelectorAll('.testimonial-card'));
-    const prevBtn = document.querySelector('.carousel-nav.prev');
-    const nextBtn = document.querySelector('.carousel-nav.next');
-    let currentIndex = 0;
-
-    const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
-    if (isRTL) track.style.flexDirection = 'row-reverse';
-
-    function updateCarousel() {
-        const container = track.parentElement;
-        const containerWidth = container.clientWidth;
-        const maxOffset = Math.max(0, track.scrollWidth - containerWidth);
-
-        const effectiveIndex = isRTL ? cards.length - 1 - currentIndex : currentIndex;
-        const activeCard = cards[effectiveIndex];
-        const cardCenter = activeCard.offsetLeft + activeCard.offsetWidth / 2;
-
-        // Center the active card in the visible area (allow whitespace at ends)
-        const desired = cardCenter - containerWidth / 2;
-        const clamped = Math.max(0, Math.min(maxOffset, desired));
-        track.style.transform = `translateX(-${clamped}px)`;
-
-        cards.forEach((card, idx) => {
-            card.classList.toggle('active', idx === effectiveIndex);
-        });
-    }
-
-    function clampIndex(idx) {
-        if (idx < 0) return cards.length - 1;
-        if (idx >= cards.length) return 0;
-        return idx;
-    }
-
-    prevBtn.addEventListener('click', () => {
-        currentIndex = clampIndex(currentIndex + (isRTL ? 1 : -1));
-        updateCarousel();
-    });
-
-    nextBtn.addEventListener('click', () => {
-        currentIndex = clampIndex(currentIndex + (isRTL ? -1 : 1));
-        updateCarousel();
-    });
-
-    // Resize-aware transform update
-    window.addEventListener('resize', () => {
-        requestAnimationFrame(updateCarousel);
-    });
-
-    // Start with first card active
-    updateCarousel();
-})();
 
 // ── Optimised Cursor (RAF only on move, not infinite loop) ──
 const cursor = document.getElementById('glassCursor');
