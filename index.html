@@ -399,7 +399,7 @@
 
     (async function () {
         try {
-            const res = await fetch('/api/portfolio');
+            const res = await fetch('data.json');
             if (!res.ok) return;
             const { data } = await res.json();
             const lang = localStorage.getItem('preferredLanguage') || 'en';

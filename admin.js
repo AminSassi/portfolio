@@ -1,11 +1,15 @@
 (function () {
-    let session = null;
+    const REPO = 'AminSassi/portfolio';
+    const FILE_PATH = 'data.json';
+    const API_BASE = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+
+    let token = null;
     let data = null;
+    let fileSHA = null;
 
     const $ = (s, p) => (p || document).querySelector(s);
     const $$ = (s, p) => Array.from((p || document).querySelectorAll(s));
 
-    // Toast
     function toast(msg, type) {
         const t = $('#toast');
         t.textContent = msg;
@@ -13,65 +17,85 @@
         setTimeout(() => t.className = 'toast', 2500);
     }
 
-    // API helpers
-    async function api(url, opts = {}) {
-        const headers = { 'Content-Type': 'application/json' };
-        if (session) headers['x-admin-session'] = session;
-        const res = await fetch(url, { ...opts, headers: { ...headers, ...opts.headers } });
+    async function ghFetch(url, opts = {}) {
+        const headers = {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json',
+            ...opts.headers
+        };
+        const res = await fetch(url, { ...opts, headers });
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.message || `GitHub API error ${res.status}`);
+        }
         return res.json();
+    }
+
+    async function loadData() {
+        const res = await ghFetch(API_BASE);
+        fileSHA = res.sha;
+        const content = decodeURIComponent(escape(atob(res.content)));
+        data = JSON.parse(content);
+        return data;
+    }
+
+    async function saveData(commitMsg) {
+        const body = JSON.stringify(data, null, 2);
+        const encoded = btoa(unescape(encodeURIComponent(body)));
+        await ghFetch(API_BASE, {
+            method: 'PUT',
+            body: JSON.stringify({
+                message: commitMsg,
+                content: encoded,
+                sha: fileSHA
+            })
+        });
+        // Re-fetch to get new SHA
+        const res = await ghFetch(API_BASE);
+        fileSHA = res.sha;
     }
 
     // Login
     $('#loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const pw = $('#loginPassword').value;
-        const res = await api('/api/admin/login', {
-            method: 'POST',
-            body: JSON.stringify({ password: pw })
-        });
-        if (!res.success) {
-            $('#loginError').textContent = res.message;
+        const input = $('#githubToken').value.trim();
+        if (!input) return;
+        token = input;
+        try {
+            await loadData();
+            localStorage.setItem('ghToken', token);
+            showDashboard();
+        } catch (err) {
+            $('#loginError').textContent = 'Invalid token or repo access: ' + err.message;
             $('#loginError').style.display = 'block';
-            return;
+            token = null;
         }
-        session = res.session;
-        localStorage.setItem('adminSession', session);
-        showDashboard();
     });
 
-    // Logout
-    $('#logoutBtn').addEventListener('click', async () => {
-        await api('/api/admin/logout', { method: 'POST' });
-        session = null;
-        localStorage.removeItem('adminSession');
+    $('#logoutBtn').addEventListener('click', () => {
+        token = null;
+        localStorage.removeItem('ghToken');
         $('#dashboard').style.display = 'none';
         $('#loginScreen').style.display = 'flex';
     });
 
-    // Check existing session
     async function checkSession() {
-        const saved = localStorage.getItem('adminSession');
+        const saved = localStorage.getItem('ghToken');
         if (!saved) return;
-        session = saved;
-        const res = await api('/api/admin/data');
-        if (res.success) {
+        token = saved;
+        try {
+            await loadData();
             showDashboard();
-        } else {
-            session = null;
-            localStorage.removeItem('adminSession');
+        } catch {
+            token = null;
+            localStorage.removeItem('ghToken');
         }
     }
 
-    async function showDashboard() {
+    function showDashboard() {
         $('#loginScreen').style.display = 'none';
         $('#dashboard').style.display = 'grid';
-        await loadData();
-    }
-
-    async function loadData() {
-        const res = await api('/api/admin/data');
-        if (!res.success) { toast('Failed to load data', 'error'); return; }
-        data = res.data;
         renderAll();
     }
 
@@ -85,7 +109,6 @@
         });
     });
 
-    // Render all sections
     function renderAll() {
         renderPortfolio();
         renderFeedback();
@@ -120,9 +143,10 @@
         list.querySelectorAll('.delete-portfolio').forEach(btn => {
             btn.addEventListener('click', async () => {
                 if (!confirm('Delete this project?')) return;
-                await api(`/api/admin/portfolio/${btn.dataset.id}`, { method: 'DELETE' });
+                data.portfolio = data.portfolio.filter(p => p.id !== btn.dataset.id);
+                await saveData('Delete portfolio project');
                 toast('Project deleted');
-                await loadData();
+                renderAll();
             });
         });
 
@@ -163,14 +187,18 @@
             fullVideo: $('#pFullVideo').value
         };
         if (id) {
-            await api(`/api/admin/portfolio/${id}`, { method: 'PUT', body: JSON.stringify(body) });
+            const idx = data.portfolio.findIndex(p => p.id === id);
+            data.portfolio[idx] = { ...data.portfolio[idx], ...body };
+            await saveData('Update portfolio project');
             toast('Project updated');
         } else {
-            await api('/api/admin/portfolio', { method: 'POST', body: JSON.stringify(body) });
+            body.id = 'p' + Date.now();
+            data.portfolio.push(body);
+            await saveData('Add portfolio project');
             toast('Project added');
         }
         $('#portfolioModal').style.display = 'none';
-        await loadData();
+        renderAll();
     });
 
     // ── Feedback ──
@@ -195,9 +223,10 @@
         list.querySelectorAll('.delete-feedback').forEach(btn => {
             btn.addEventListener('click', async () => {
                 if (!confirm('Delete this feedback?')) return;
-                await api(`/api/admin/feedback/${btn.dataset.id}`, { method: 'DELETE' });
+                data.feedback = data.feedback.filter(f => f.id !== btn.dataset.id);
+                await saveData('Delete feedback');
                 toast('Feedback deleted');
-                await loadData();
+                renderAll();
             });
         });
 
@@ -240,14 +269,18 @@
             stars: parseInt($('#fStars').value)
         };
         if (id) {
-            await api(`/api/admin/feedback/${id}`, { method: 'PUT', body: JSON.stringify(body) });
+            const idx = data.feedback.findIndex(f => f.id === id);
+            data.feedback[idx] = { ...data.feedback[idx], ...body };
+            await saveData('Update feedback');
             toast('Feedback updated');
         } else {
-            await api('/api/admin/feedback', { method: 'POST', body: JSON.stringify(body) });
+            body.id = 'f' + Date.now();
+            data.feedback.push(body);
+            await saveData('Add feedback');
             toast('Feedback added');
         }
         $('#feedbackModal').style.display = 'none';
-        await loadData();
+        renderAll();
     });
 
     // ── Hero ──
@@ -271,9 +304,9 @@
                 body[keys[0]][keys[1]] = input.value;
             }
         });
-        await api('/api/admin/hero', { method: 'PUT', body: JSON.stringify(body) });
+        data.hero = { ...data.hero, ...body };
+        await saveData('Update hero section');
         toast('Hero saved');
-        await loadData();
     });
 
     // ── About ──
@@ -350,9 +383,9 @@
                 tn: $(`.skill-desc-tn[data-idx="${i}"]`).value
             }
         }));
-        await api('/api/admin/about', { method: 'PUT', body: JSON.stringify({ paragraphs, skills }) });
+        data.about = { paragraphs, skills };
+        await saveData('Update about section');
         toast('About saved');
-        await loadData();
     });
 
     // ── Stats ──
@@ -409,9 +442,9 @@
                 tn: $(`.stat-label-tn[data-idx="${i}"]`).value
             }
         }));
-        await api('/api/admin/stats', { method: 'PUT', body: JSON.stringify({ stats }) });
+        data.stats = stats;
+        await saveData('Update stats section');
         toast('Stats saved');
-        await loadData();
     });
 
     // ── YouTube ──
@@ -437,9 +470,9 @@
                 body[keys[0]] = input.value;
             }
         });
-        await api('/api/admin/youtube', { method: 'PUT', body: JSON.stringify(body) });
+        data.youtube = { ...data.youtube, ...body };
+        await saveData('Update youtube section');
         toast('YouTube saved');
-        await loadData();
     });
 
     // ── Social ──
@@ -486,9 +519,9 @@
             platform: $(`.social-platform[data-idx="${i}"]`).value,
             url: $(`.social-url[data-idx="${i}"]`).value
         }));
-        await api('/api/admin/social', { method: 'PUT', body: JSON.stringify({ social }) });
+        data.social = social;
+        await saveData('Update social links');
         toast('Social links saved');
-        await loadData();
     });
 
     // ── Modal close ──

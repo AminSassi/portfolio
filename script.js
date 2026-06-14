@@ -1,4 +1,4 @@
-﻿// Language Switcher
+// Language Switcher
 const body = document.body;
 const translatableElements = Array.from(document.querySelectorAll('[data-en]'));
 
@@ -334,7 +334,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 
 // Only play preview videos when they are visible on-screen.
 // This reduces CPU/GPU load when many previews exist offscreen.
-const previewObserver = new IntersectionObserver((entries) => {
+var previewObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         const video = entry.target;
         if (entry.isIntersecting) {
@@ -367,7 +367,7 @@ document.querySelectorAll('.video-preview').forEach(video => {
     previewObserver.observe(video);
 });
 
-const observer = new IntersectionObserver((entries) => {
+var observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
