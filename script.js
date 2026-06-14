@@ -281,11 +281,9 @@ var previewObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         const video = entry.target;
         if (entry.isIntersecting) {
-            // Always start from the first frame so the preview matches the source.
             try { video.currentTime = 0.01; } catch (err) {}
             video.play().catch(() => {});
         } else {
-            // Reset to the beginning so the thumbnail doesn't show a random ending frame.
             try { video.currentTime = 0.01; } catch (err) {}
             video.pause();
         }
@@ -293,20 +291,7 @@ var previewObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 
 document.querySelectorAll('.video-preview').forEach(video => {
-    // Ensure the preview stays hidden until it has at least one frame ready.
-    const markLoaded = () => {
-        // Seek just past the start so we get the first decoded frame (often a keyframe).
-        try { video.currentTime = 0.01; } catch (err) {}
-        video.classList.add('loaded');
-        video.pause();
-    };
-
-    if (video.readyState >= 3) {
-        markLoaded();
-    } else {
-        video.addEventListener('loadeddata', markLoaded, { once: true });
-    }
-
+    video.classList.add('loaded');
     previewObserver.observe(video);
 });
 

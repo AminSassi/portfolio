@@ -442,13 +442,7 @@
 
                     // Init video observers for newly added portfolio previews
                     track.querySelectorAll('.video-preview').forEach(video => {
-                        const markLoaded = () => {
-                            try { video.currentTime = 0.01; } catch (err) {}
-                            video.classList.add('loaded');
-                            video.pause();
-                        };
-                        if (video.readyState >= 3) markLoaded();
-                        else video.addEventListener('loadeddata', markLoaded, { once: true });
+                        video.classList.add('loaded');
                         previewObserver.observe(video);
                     });
                 }
