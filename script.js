@@ -148,37 +148,67 @@ backToTop.addEventListener('click', () => {
 // Form Submission
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+    const formData = new FormData(contactForm);
+    const submitBtn = contactForm.querySelector('.submit-button');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '...';
+    submitBtn.disabled = true;
 
-    // Using mailto as a basic fallback
-    const subject = encodeURIComponent(`Contact from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    window.location.href = `mailto:aminsassi267@gmail.com?subject=${subject}&body=${body}`;
-    
-    // Show success message
-    const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-    const successMessage = currentLang === 'en'
-        ? 'Thank you for your message! I will get back to you soon.'
-        : 'شكراً على رسالتك! باش نرجعلك بالإجابة قريب.';
-    const toast = document.createElement('div');
-    Object.assign(toast.style, {
-        position: 'fixed', bottom: '2rem', left: '50%',
-        transform: 'translateX(-50%)',
-        background: 'rgba(30,40,60,0.95)', color: '#fff',
-        padding: '0.85rem 1.6rem', borderRadius: '8px',
-        fontSize: '0.95rem', zIndex: '99999',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.35)',
-        transition: 'opacity 0.4s ease'
-    });
-    toast.textContent = successMessage;
-    document.body.appendChild(toast);
-    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 3500);
-    contactForm.reset();
+    try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+
+        const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+        const successMessage = currentLang === 'en'
+            ? 'Thank you for your message! I will get back to you soon.'
+            : 'شكراً على رسالتك! باش نرجعلك بالإجابة قريب.';
+        const errorMessage = currentLang === 'en'
+            ? 'Something went wrong. Please try again.'
+            : 'فيه مشكلة صارت. حاول مرة أخرى.';
+
+        const toast = document.createElement('div');
+        Object.assign(toast.style, {
+            position: 'fixed', bottom: '2rem', left: '50%',
+            transform: 'translateX(-50%)',
+            background: result.success ? 'rgba(30,40,60,0.95)' : 'rgba(60,30,30,0.95)',
+            color: '#fff',
+            padding: '0.85rem 1.6rem', borderRadius: '8px',
+            fontSize: '0.95rem', zIndex: '99999',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.35)',
+            transition: 'opacity 0.4s ease'
+        });
+        toast.textContent = result.success ? successMessage : errorMessage;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 3500);
+        contactForm.reset();
+    } catch (err) {
+        const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+        const errorMessage = currentLang === 'en'
+            ? 'Something went wrong. Please try again.'
+            : 'فيه مشكلة صارت. حاول مرة أخرى.';
+        const toast = document.createElement('div');
+        Object.assign(toast.style, {
+            position: 'fixed', bottom: '2rem', left: '50%',
+            transform: 'translateX(-50%)',
+            background: 'rgba(60,30,30,0.95)', color: '#fff',
+            padding: '0.85rem 1.6rem', borderRadius: '8px',
+            fontSize: '0.95rem', zIndex: '99999',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.35)',
+            transition: 'opacity 0.4s ease'
+        });
+        toast.textContent = errorMessage;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 3500);
+    }
+
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
 });
 
 // Smooth scroll with offset for fixed navbar
@@ -413,7 +443,7 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
 })();
 
 
-// -- Feedback Stack Scroll --
+// ── Feedback Stack Scroll ──
 (function () {
     const stack  = document.getElementById('feedbackStack');
     const btnDn  = document.getElementById('fbScrollBtn');
@@ -438,4 +468,20 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
 
     stack.addEventListener('scroll', updateStack, { passive: true });
     updateStack();
+})();
+
+// ── Section Reveal on Scroll ──
+(function () {
+    var revealSections = document.querySelectorAll('section:not(.hero)');
+    revealSections.forEach(function(sec) { sec.classList.add('reveal'); });
+
+    var revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    revealSections.forEach(function(sec) { revealObserver.observe(sec); });
 })();
