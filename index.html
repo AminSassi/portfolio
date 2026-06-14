@@ -515,6 +515,12 @@
         try {
             const loadingScreen = document.getElementById('loadingScreen');
             if (loadingScreen) {
+                const startTime = Date.now();
+                const minDisplayTime = 1500;
+                await new Promise(resolve => {
+                    const elapsed = Date.now() - startTime;
+                    setTimeout(resolve, Math.max(0, minDisplayTime - elapsed));
+                });
                 loadingScreen.classList.add('loaded');
                 setTimeout(() => loadingScreen.remove(), 600);
             }
