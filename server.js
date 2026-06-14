@@ -2,34 +2,45 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const DATA_FILE = path.join(__dirname, 'data.json');
 
-// Restrict CORS to trusted origin only
 const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://aminsassi.github.io';
 app.use(cors({ origin: allowedOrigin, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname));
 
-// CSRF token store (in-memory, simple)
+function readData() {
+  return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+}
+
+function writeData(data) {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+}
+
+function generateId() {
+  return crypto.randomBytes(6).toString('hex');
+}
+
+// CSRF
 const csrfTokens = new Set();
-
 function generateCsrfToken() {
   const token = crypto.randomBytes(32).toString('hex');
   csrfTokens.add(token);
   return token;
 }
-
 function verifyCsrfToken(token) {
   if (!token || !csrfTokens.has(token)) return false;
   csrfTokens.delete(token);
   return true;
 }
-
-// CSRF middleware for state-changing routes
 function csrfProtect(req, res, next) {
   const token = req.headers['x-csrf-token'];
   if (!verifyCsrfToken(token)) {
@@ -38,186 +49,190 @@ function csrfProtect(req, res, next) {
   next();
 }
 
-// API key auth middleware
-function requireAuth(req, res, next) {
-  const apiKey = req.headers['x-api-key'];
-  if (!apiKey || apiKey !== process.env.API_KEY) {
+// Session store
+const sessions = new Set();
+function generateSession() {
+  const token = crypto.randomBytes(32).toString('hex');
+  sessions.add(token);
+  return token;
+}
+function requireAdmin(req, res, next) {
+  const session = req.headers['x-admin-session'];
+  if (!session || !sessions.has(session)) {
     return res.status(401).json({ success: false, message: 'Unauthorized' });
   }
   next();
 }
 
-// Sample data (in a real app, this would come from a database)
-let users = [
-  { id: 1, name: 'John Doe', email: 'john@example.com' },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
-  { id: 3, name: 'Bob Johnson', email: 'bob@example.com' }
-];
-
-// Routes
-
-// GET /api/users - Get all users
-app.get('/api/users', (req, res) => {
-  res.json({
-    success: true,
-    data: users,
-    count: users.length
-  });
-});
-
-// GET /api/users/:id - Get a specific user by ID
-app.get('/api/users/:id', (req, res) => {
-  const userId = parseInt(req.params.id);
-  const user = users.find(u => u.id === userId);
-  
-  if (!user) {
-    return res.status(404).json({
-      success: false,
-      message: 'User not found'
-    });
+// Public: serve portfolio data
+app.get('/api/portfolio', (req, res) => {
+  try {
+    const data = readData();
+    res.json({ success: true, data });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to load portfolio data' });
   }
-  
-  res.json({
-    success: true,
-    data: user
-  });
 });
 
-// GET /api/csrf-token - Issue a CSRF token
 app.get('/api/csrf-token', (req, res) => {
   res.json({ csrfToken: generateCsrfToken() });
 });
 
-// POST /api/users - Create a new user
-app.post('/api/users', requireAuth, csrfProtect, (req, res) => {
-  const { name, email } = req.body;
-  
-  // Basic validation
-  if (!name || !email) {
-    return res.status(400).json({
-      success: false,
-      message: 'Name and email are required'
-    });
+// Admin login
+app.post('/api/admin/login', (req, res) => {
+  const { password } = req.body;
+  if (!password || password !== process.env.ADMIN_PASSWORD) {
+    return res.status(401).json({ success: false, message: 'Wrong password' });
   }
-  
-  // Check if email already exists
-  const existingUser = users.find(u => u.email === email);
-  if (existingUser) {
-    return res.status(400).json({
-      success: false,
-      message: 'User with this email already exists'
-    });
-  }
-  
-  // Create new user
-  const newUser = {
-    id: users.length + 1,
-    name,
-    email
-  };
-  
-  users.push(newUser);
-  
-  res.status(201).json({
-    success: true,
-    data: newUser,
-    message: 'User created successfully'
-  });
+  const session = generateSession();
+  res.json({ success: true, session });
 });
 
-// PUT /api/users/:id - Update a user
-app.put('/api/users/:id', requireAuth, csrfProtect, (req, res) => {
-  const userId = parseInt(req.params.id);
-  const { name, email } = req.body;
-  
-  const userIndex = users.findIndex(u => u.id === userId);
-  
-  if (userIndex === -1) {
-    return res.status(404).json({
-      success: false,
-      message: 'User not found'
-    });
-  }
-  
-  // Update user
-  if (name) users[userIndex].name = name;
-  if (email) users[userIndex].email = email;
-  
-  res.json({
-    success: true,
-    data: users[userIndex],
-    message: 'User updated successfully'
-  });
+// Admin logout
+app.post('/api/admin/logout', requireAdmin, (req, res) => {
+  const session = req.headers['x-admin-session'];
+  sessions.delete(session);
+  res.json({ success: true });
 });
 
-// DELETE /api/users/:id - Delete a user
-app.delete('/api/users/:id', requireAuth, csrfProtect, (req, res) => {
-  const userId = parseInt(req.params.id);
-  const userIndex = users.findIndex(u => u.id === userId);
-  
-  if (userIndex === -1) {
-    return res.status(404).json({
-      success: false,
-      message: 'User not found'
-    });
+// Admin: get all data
+app.get('/api/admin/data', requireAdmin, (req, res) => {
+  try {
+    const data = readData();
+    res.json({ success: true, data });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to load data' });
   }
-  
-  const deletedUser = users.splice(userIndex, 1)[0];
-  
-  res.json({
-    success: true,
-    data: deletedUser,
-    message: 'User deleted successfully'
-  });
 });
 
-// GET /api/health - Health check endpoint
+// Admin: update hero
+app.put('/api/admin/hero', requireAdmin, (req, res) => {
+  const data = readData();
+  data.hero = { ...data.hero, ...req.body };
+  writeData(data);
+  res.json({ success: true, data: data.hero });
+});
+
+// Admin: update stats
+app.put('/api/admin/stats', requireAdmin, (req, res) => {
+  const data = readData();
+  data.stats = req.body.stats;
+  writeData(data);
+  res.json({ success: true, data: data.stats });
+});
+
+// Admin: update about
+app.put('/api/admin/about', requireAdmin, (req, res) => {
+  const data = readData();
+  data.about = { ...data.about, ...req.body };
+  writeData(data);
+  res.json({ success: true, data: data.about });
+});
+
+// Admin: update youtube
+app.put('/api/admin/youtube', requireAdmin, (req, res) => {
+  const data = readData();
+  data.youtube = { ...data.youtube, ...req.body };
+  writeData(data);
+  res.json({ success: true, data: data.youtube });
+});
+
+// Admin: update social
+app.put('/api/admin/social', requireAdmin, (req, res) => {
+  const data = readData();
+  data.social = req.body.social;
+  writeData(data);
+  res.json({ success: true, data: data.social });
+});
+
+// Admin: update contact
+app.put('/api/admin/contact', requireAdmin, (req, res) => {
+  const data = readData();
+  data.contact = { ...data.contact, ...req.body };
+  writeData(data);
+  res.json({ success: true, data: data.contact });
+});
+
+// Admin: portfolio CRUD
+app.post('/api/admin/portfolio', requireAdmin, (req, res) => {
+  const data = readData();
+  const item = { id: generateId(), ...req.body };
+  data.portfolio.push(item);
+  writeData(data);
+  res.status(201).json({ success: true, data: item });
+});
+
+app.put('/api/admin/portfolio/:id', requireAdmin, (req, res) => {
+  const data = readData();
+  const idx = data.portfolio.findIndex(p => p.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ success: false, message: 'Not found' });
+  data.portfolio[idx] = { ...data.portfolio[idx], ...req.body, id: req.params.id };
+  writeData(data);
+  res.json({ success: true, data: data.portfolio[idx] });
+});
+
+app.delete('/api/admin/portfolio/:id', requireAdmin, (req, res) => {
+  const data = readData();
+  const idx = data.portfolio.findIndex(p => p.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ success: false, message: 'Not found' });
+  data.portfolio.splice(idx, 1);
+  writeData(data);
+  res.json({ success: true });
+});
+
+// Admin: reorder portfolio
+app.put('/api/admin/portfolio-reorder', requireAdmin, (req, res) => {
+  const data = readData();
+  data.portfolio = req.body.portfolio;
+  writeData(data);
+  res.json({ success: true });
+});
+
+// Admin: feedback CRUD
+app.post('/api/admin/feedback', requireAdmin, (req, res) => {
+  const data = readData();
+  const item = { id: generateId(), ...req.body };
+  data.feedback.push(item);
+  writeData(data);
+  res.status(201).json({ success: true, data: item });
+});
+
+app.put('/api/admin/feedback/:id', requireAdmin, (req, res) => {
+  const data = readData();
+  const idx = data.feedback.findIndex(f => f.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ success: false, message: 'Not found' });
+  data.feedback[idx] = { ...data.feedback[idx], ...req.body, id: req.params.id };
+  writeData(data);
+  res.json({ success: true, data: data.feedback[idx] });
+});
+
+app.delete('/api/admin/feedback/:id', requireAdmin, (req, res) => {
+  const data = readData();
+  const idx = data.feedback.findIndex(f => f.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ success: false, message: 'Not found' });
+  data.feedback.splice(idx, 1);
+  writeData(data);
+  res.json({ success: true });
+});
+
+// Health check
 app.get('/api/health', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Server is running',
-    timestamp: new Date().toISOString()
-  });
+  res.json({ success: true, message: 'Server is running', timestamp: new Date().toISOString() });
 });
 
-// Root endpoint
-app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Welcome to the Express REST API',
-    endpoints: {
-      'GET /api/health': 'Health check',
-      'GET /api/users': 'Get all users',
-      'GET /api/users/:id': 'Get user by ID',
-      'POST /api/users': 'Create new user',
-      'PUT /api/users/:id': 'Update user',
-      'DELETE /api/users/:id': 'Delete user'
-    }
-  });
-});
-
-// Error handling middleware
+// Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: 'Something went wrong!',
-    error: process.env.NODE_ENV === 'development' ? err.message : {}
-  });
+  res.status(500).json({ success: false, message: 'Something went wrong!' });
 });
 
-// 404 handler - moved to the end, after all routes
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Endpoint not found'
-  });
+  res.status(404).json({ success: false, message: 'Endpoint not found' });
 });
 
-// Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
-  console.log(`📱 API endpoints available at http://localhost:${PORT}/api`);
+  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Admin dashboard at http://localhost:${PORT}/admin.html`);
 });
 
 module.exports = app;

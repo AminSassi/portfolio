@@ -1,0 +1,172 @@
+{
+  "hero": {
+    "name": {
+      "en": "Amin Sassi",
+      "tn": "أمين ساسي"
+    },
+    "role": {
+      "en": "Video Editor",
+      "tn": "مونتير فيديو"
+    },
+    "taglineTop": {
+      "en": "CRAFTING STORIES",
+      "tn": "نصنع القصص"
+    },
+    "taglineBottom": {
+      "en": "That captivate and inspire.",
+      "tn": "التي تشدّ وتلهِم."
+    }
+  },
+  "stats": [
+    {
+      "number": { "en": "20+", "tn": "20+" },
+      "label": { "en": "Projects Completed", "tn": "مشاريع كمّلتهم" }
+    },
+    {
+      "number": { "en": "100%", "tn": "100%" },
+      "label": { "en": "Client Satisfaction", "tn": "رضى الحرفاء" }
+    },
+    {
+      "number": { "en": "2+", "tn": "2+" },
+      "label": { "en": "Years Experience", "tn": "سنين خبرة" }
+    }
+  ],
+  "about": {
+    "paragraphs": [
+      {
+        "en": "Hey, I'm Mohamed Amin Ben Sassi — a Creative Video Editor & Multimedia Specialist with over 2 years of experience in creating meaningful visual content, where I produce media that aligns with values and purpose.",
+        "tn": "مرحباً، أنا محمد أمين بن ساسي — مونتير فيديو ومتخصص وسائط متعددة بخبرة تزيد عن سنتين في إنتاج محتوى بصري ذو معنى، حيث أُنتج وسائط تتوافق مع القيم والهدف."
+      },
+      {
+        "en": "I've worked on projects covering Video editing, Motion graphics, Directing, Videography, and 3D art. My expertise includes Adobe Premiere, After Effects, Illustrator, Blender, and Photoshop. Also i've been working on my YouTube channel as a hobby since 2017.",
+        "tn": "عملت على مشاريع تشمل المونتاج، الجرافيك المتحرك، الإخراج، التصوير، والفن ثلاثي الأبعاد. أمتلك خبرة في Adobe Premiere وAfter Effects وIllustrator وBlender وPhotoshop. أعمل على قناتي في اليوتيوب كهواية منذ 2017."
+      }
+    ],
+    "skills": [
+      {
+        "title": { "en": "Video Editing", "tn": "مونتاج الفيديو" },
+        "description": { "en": "Adobe Premiere Pro, Vegas Pro, Timeline mastery", "tn": "Adobe Premiere Pro, Vegas Pro, إتقان التايم لاين" }
+      },
+      {
+        "title": { "en": "Motion Graphics", "tn": "الموشن جرافيكس" },
+        "description": { "en": "After Effects, kinetic typography, visual effects", "tn": "After Effects, الطايبوجرافي المتحرك، المؤثرات البصرية" }
+      }
+    ]
+  },
+  "portfolio": [
+    {
+      "id": "p1",
+      "title": { "en": "Raba7ni Loyalty App Explainer", "tn": "شرح تطبيق الولاء" },
+      "description": { "en": "A promotional video explaining a restaurant loyalty app with screen recordings, smooth transitions, and clear pacing.", "tn": "فيديو ترويجي يشرح تطبيق ولاء مع تسجيلات شاشة وانتقالات سلسة وإيقاع واضح." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029935/Raba7ni_Final_Enhanced_1_q2wpp8.mp4"
+    },
+    {
+      "id": "p2",
+      "title": { "en": "Oxymass Product Demo", "tn": "عرض منتج Oxymass" },
+      "description": { "en": "A clean product demo highlighting features with close-ups, clear visuals, and subtle motion graphics.", "tn": "فيديو عرض منتج يبرز المميزات بلقطات قريبة ومرئيات واضحة وموشن جرافيكس خفيف." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029108/oxymass_x1jsck.mp4"
+    },
+    {
+      "id": "p3",
+      "title": { "en": "Valentine's Gift Promo", "tn": "إعلان هدية عيد الحب" },
+      "description": { "en": "A cinematic commercial combining dynamic editing, color grading, and storytelling.", "tn": "إعلان سينمائي يجمع مونتاج ديناميكي وتدريج ألوان وسرد قصصي جذاب." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029934/Kadoline_2.0_1_bpdgjf.mp4"
+    },
+    {
+      "id": "p4",
+      "title": { "en": "Digipress platform Video", "tn": "فيديو المعصرة الذكية Digipress" },
+      "description": { "en": "A brand video with clean editing, motion graphics, and strong visual storytelling.", "tn": "فيديو علامة تجارية بمونتاج نظيف وموشن جرافيكس وسرد بصري جذاب." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029944/Digipress1_1_w1yw1a.mp4"
+    },
+    {
+      "id": "p5",
+      "title": { "en": "Egypt Travel Agency Ad", "tn": "إعلان رحلة إلى مصر" },
+      "description": { "en": "A commercial-style travel ad with cinematic shots and vibrant color grading.", "tn": "فيديو إعلاني لرحلة إلى مصر بلقطات سينمائية وتدريج ألوان نابض." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029946/Egypt_Finalversion_1_xzxz6h.mp4"
+    },
+    {
+      "id": "p6",
+      "title": { "en": "SOS Logo Animation", "tn": "أنيميشن شعار SOS" },
+      "description": { "en": "A clean logo animation with smooth motion graphics and modern visual style.", "tn": "أنيميشن شعار بموشن جرافيكس سلسة وستايل بصري حديث." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029112/timelineSOSLOGOfinal_c6ctlc.mp4"
+    },
+    {
+      "id": "p7",
+      "title": { "en": "Cardigan Showcase", "tn": "عرض لبراند AM Fashion كاردغان" },
+      "description": { "en": "A girls clothing brand highlight featuring cozy cardigan styling and vibrant product detail.", "tn": "عرض لعلامة ملابس بنات يركّز على كاردغان بإطلالة دافئة وتفاصيل ملونة." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773518213/am2_1_ulwvau.mp4"
+    },
+    {
+      "id": "p8",
+      "title": { "en": "Korean AI Love Short Film", "tn": "فيلم حب كوري بالذكاء الاصطناعي" },
+      "description": { "en": "A short romance story created entirely with AI visuals and storytelling.", "tn": "قصة حب قصيرة تمّ صنعها بالكامل بصرياً بالذكاء الاصطناعي." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773518734/Verticalresultkoreanvid_dyoeyg.mp4"
+    }
+  ],
+  "feedback": [
+    {
+      "id": "f1",
+      "name": "Karim",
+      "company": "Digipress",
+      "avatar": "https://res.cloudinary.com/dldy0enia/image/upload/v1773539863/qdcc_x8xpob.jpg",
+      "voiceUrl": "https://res.cloudinary.com/dldy0enia/video/upload/v1773540623/digipress_wkc9ru.mp3",
+      "stars": 5
+    },
+    {
+      "id": "f2",
+      "name": "Amine",
+      "company": "Kadouline",
+      "avatar": "https://res.cloudinary.com/dldy0enia/image/upload/v1773539581/Upgrade_the_uploaded_image_into_a_pristine_ultrahi_delpmaspu_n3u1pf.png",
+      "voiceUrl": "https://res.cloudinary.com/dldy0enia/video/upload/v1773528536/kadolinevs_hscsky.mp3",
+      "stars": 5
+    },
+    {
+      "id": "f3",
+      "name": "Tayeb",
+      "company": "Raba7ni",
+      "avatar": "https://res.cloudinary.com/dldy0enia/image/upload/v1773539804/ssdd_p5neld.jpg",
+      "voiceUrl": "https://res.cloudinary.com/dldy0enia/video/upload/v1773539175/rabahni_covvns.mp3",
+      "stars": 5
+    },
+    {
+      "id": "f4",
+      "name": "Amina",
+      "company": "AM Fashion",
+      "avatar": "https://res.cloudinary.com/dldy0enia/image/upload/v1773540328/Upgrade_the_uploaded_image_into_a_pristine_ultrahi_delpmaspu_1_valzbj.png",
+      "voiceUrl": "https://res.cloudinary.com/dldy0enia/video/upload/v1773674602/aminaAMfashion_kegdhu.mp3",
+      "stars": 5
+    },
+    {
+      "id": "f5",
+      "name": "Oussema",
+      "company": "SOS Village d'enfants",
+      "avatar": "https://res.cloudinary.com/dldy0enia/image/upload/v1773674685/647165711_947805108191592_2790156307108954880_n_g8tktv.jpg",
+      "voiceUrl": "https://res.cloudinary.com/dldy0enia/video/upload/v1773674641/oussemaSOS_cvsmwe.mp3",
+      "stars": 5
+    },
+    {
+      "id": "f6",
+      "name": "Sana",
+      "company": "Royaume Voyage Sfax",
+      "avatar": "https://res.cloudinary.com/dldy0enia/image/upload/v1773674831/ddcv_v0krnx.jpg",
+      "voiceUrl": "https://res.cloudinary.com/dldy0enia/video/upload/v1773674705/sanavoyagesroyaume_xen77l.mp3",
+      "stars": 5
+    }
+  ],
+  "youtube": {
+    "url": "https://www.youtube.com/@amiinsassii",
+    "videoUrl": "https://res.cloudinary.com/dldy0enia/video/upload/v1773535521/Ytchannel3d_otnjjr.mp4",
+    "note": {
+      "en": "All thumbnails, videos, ideas are done by me.",
+      "tn": "كل الصور المصغرة، الفيديوهات والأفكار من عندي."
+    }
+  },
+  "social": [
+    { "platform": "instagram", "url": "https://www.instagram.com/amiinsassii/" },
+    { "platform": "linkedin", "url": "https://www.linkedin.com/in/mohamed-amin-ben-sassi-0a4961346/" },
+    { "platform": "facebook", "url": "https://www.facebook.com/amin.sassi.2025/" }
+  ],
+  "contact": {
+    "email": "aminsassi267@gmail.com"
+  }
+}

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Amin Sassi Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-card">
+            <div class="login-logo">AS</div>
+            <h1>Admin Dashboard</h1>
+            <p>Enter your password to continue</p>
+            <form id="loginForm">
+                <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+                <button type="submit" class="btn-primary">Login</button>
+                <div id="loginError" class="error-msg" style="display:none"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard" style="display:none">
+        <header class="topbar">
+            <div class="topbar-left">
+                <h2>Portfolio Admin</h2>
+            </div>
+            <div class="topbar-right">
+                <a href="/" target="_blank" class="btn-ghost">View Site</a>
+                <button id="logoutBtn" class="btn-ghost">Logout</button>
+            </div>
+        </header>
+
+        <nav class="sidebar">
+            <button class="nav-item active" data-tab="portfolio">Portfolio</button>
+            <button class="nav-item" data-tab="feedback">Feedback</button>
+            <button class="nav-item" data-tab="hero">Hero</button>
+            <button class="nav-item" data-tab="about">About</button>
+            <button class="nav-item" data-tab="stats">Stats</button>
+            <button class="nav-item" data-tab="youtube">YouTube</button>
+            <button class="nav-item" data-tab="social">Social Links</button>
+        </nav>
+
+        <main class="content">
+
+            <!-- Portfolio Tab -->
+            <section id="tab-portfolio" class="tab-panel active">
+                <div class="section-header">
+                    <h3>Portfolio Projects</h3>
+                    <button class="btn-primary" id="addPortfolioBtn">+ Add Project</button>
+                </div>
+                <div id="portfolioList" class="item-list"></div>
+            </section>
+
+            <!-- Feedback Tab -->
+            <section id="tab-feedback" class="tab-panel">
+                <div class="section-header">
+                    <h3>Client Feedback</h3>
+                    <button class="btn-primary" id="addFeedbackBtn">+ Add Feedback</button>
+                </div>
+                <div id="feedbackList" class="item-list"></div>
+            </section>
+
+            <!-- Hero Tab -->
+            <section id="tab-hero" class="tab-panel">
+                <div class="section-header"><h3>Hero Section</h3></div>
+                <form id="heroForm" class="edit-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name (EN)</label>
+                            <input type="text" data-field="name.en">
+                        </div>
+                        <div class="form-group">
+                            <label>Name (TN)</label>
+                            <input type="text" data-field="name.tn">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Role (EN)</label>
+                            <input type="text" data-field="role.en">
+                        </div>
+                        <div class="form-group">
+                            <label>Role (TN)</label>
+                            <input type="text" data-field="role.tn">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tagline Top (EN)</label>
+                            <input type="text" data-field="taglineTop.en">
+                        </div>
+                        <div class="form-group">
+                            <label>Tagline Top (TN)</label>
+                            <input type="text" data-field="taglineTop.tn">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tagline Bottom (EN)</label>
+                            <input type="text" data-field="taglineBottom.en">
+                        </div>
+                        <div class="form-group">
+                            <label>Tagline Bottom (TN)</label>
+                            <input type="text" data-field="taglineBottom.tn">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Save Hero</button>
+                </form>
+            </section>
+
+            <!-- About Tab -->
+            <section id="tab-about" class="tab-panel">
+                <div class="section-header"><h3>About Section</h3></div>
+                <form id="aboutForm" class="edit-form">
+                    <div class="form-group">
+                        <label>Paragraph 1 (EN)</label>
+                        <textarea data-field="paragraphs.0.en" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Paragraph 1 (TN)</label>
+                        <textarea data-field="paragraphs.0.tn" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Paragraph 2 (EN)</label>
+                        <textarea data-field="paragraphs.1.en" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Paragraph 2 (TN)</label>
+                        <textarea data-field="paragraphs.1.tn" rows="3"></textarea>
+                    </div>
+                    <h4 style="margin:1.5rem 0 0.8rem;color:rgba(255,255,255,0.7)">Skills</h4>
+                    <div id="skillsEditor"></div>
+                    <button type="button" class="btn-ghost" id="addSkillBtn" style="margin-top:0.8rem">+ Add Skill</button>
+                    <br><br>
+                    <button type="submit" class="btn-primary">Save About</button>
+                </form>
+            </section>
+
+            <!-- Stats Tab -->
+            <section id="tab-stats" class="tab-panel">
+                <div class="section-header"><h3>Stats Section</h3></div>
+                <form id="statsForm" class="edit-form">
+                    <div id="statsEditor"></div>
+                    <button type="button" class="btn-ghost" id="addStatBtn" style="margin-top:0.8rem">+ Add Stat</button>
+                    <br><br>
+                    <button type="submit" class="btn-primary">Save Stats</button>
+                </form>
+            </section>
+
+            <!-- YouTube Tab -->
+            <section id="tab-youtube" class="tab-panel">
+                <div class="section-header"><h3>YouTube Section</h3></div>
+                <form id="youtubeForm" class="edit-form">
+                    <div class="form-group">
+                        <label>YouTube Channel URL</label>
+                        <input type="url" data-field="url">
+                    </div>
+                    <div class="form-group">
+                        <label>Preview Video URL (Cloudinary)</label>
+                        <input type="url" data-field="videoUrl">
+                    </div>
+                    <div class="form-group">
+                        <label>Note (EN)</label>
+                        <input type="text" data-field="note.en">
+                    </div>
+                    <div class="form-group">
+                        <label>Note (TN)</label>
+                        <input type="text" data-field="note.tn">
+                    </div>
+                    <button type="submit" class="btn-primary">Save YouTube</button>
+                </form>
+            </section>
+
+            <!-- Social Tab -->
+            <section id="tab-social" class="tab-panel">
+                <div class="section-header"><h3>Social Links</h3></div>
+                <form id="socialForm" class="edit-form">
+                    <div id="socialEditor"></div>
+                    <button type="button" class="btn-ghost" id="addSocialBtn" style="margin-top:0.8rem">+ Add Link</button>
+                    <br><br>
+                    <button type="submit" class="btn-primary">Save Social Links</button>
+                </form>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Portfolio Modal -->
+    <div id="portfolioModal" class="modal" style="display:none">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="portfolioModalTitle">Add Project</h3>
+                <button class="modal-close" data-close="portfolioModal">&times;</button>
+            </div>
+            <form id="portfolioForm" class="edit-form">
+                <input type="hidden" id="portfolioItemId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Title (EN)</label>
+                        <input type="text" id="pTitleEn" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Title (TN)</label>
+                        <input type="text" id="pTitleTn" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Description (EN)</label>
+                        <textarea id="pDescEn" rows="2" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Description (TN)</label>
+                        <textarea id="pDescTn" rows="2" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Full Video URL (Cloudinary)</label>
+                    <input type="url" id="pFullVideo" required>
+                </div>
+                <p style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:-0.5rem">Thumbnail is auto-generated from this URL</p>
+                <div class="modal-actions">
+                    <button type="button" class="btn-ghost" data-close="portfolioModal">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="modal" style="display:none">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="feedbackModalTitle">Add Feedback</h3>
+                <button class="modal-close" data-close="feedbackModal">&times;</button>
+            </div>
+            <form id="feedbackForm" class="edit-form">
+                <input type="hidden" id="feedbackItemId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="fName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" id="fCompany" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Avatar URL (Cloudinary)</label>
+                    <input type="url" id="fAvatar" required>
+                </div>
+                <div class="form-group">
+                    <label>Voice Note URL (Cloudinary)</label>
+                    <input type="url" id="fVoice" required>
+                </div>
+                <div class="form-group">
+                    <label>Stars (1-5)</label>
+                    <input type="number" id="fStars" min="1" max="5" value="5" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-ghost" data-close="feedbackModal">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
