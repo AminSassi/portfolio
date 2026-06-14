@@ -21,10 +21,10 @@
         const headers = {
             'Authorization': `token ${token}`,
             'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json',
             ...opts.headers
         };
-        const res = await fetch(url, { ...opts, headers });
+        if (opts.body) headers['Content-Type'] = 'application/json';
+        const res = await fetch(url, { ...opts, headers, mode: 'cors' });
         if (!res.ok) {
             const err = await res.json().catch(() => ({}));
             throw new Error(err.message || `GitHub API error ${res.status}`);

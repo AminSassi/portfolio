@@ -14,11 +14,12 @@
         <div class="login-card">
             <div class="login-logo">AS</div>
             <h1>Admin Dashboard</h1>
-            <p>Enter your password to continue</p>
+            <p>Enter your GitHub token to continue</p>
             <form id="loginForm">
-                <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+                <input type="password" id="githubToken" placeholder="GitHub Token (ghp_...)" required>
                 <button type="submit" class="btn-primary">Login</button>
                 <div id="loginError" class="error-msg" style="display:none"></div>
+                <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:1rem">Token is saved in your browser only. Never stored on any server.</p>
             </form>
         </div>
     </div>
