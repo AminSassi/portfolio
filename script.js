@@ -507,6 +507,48 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
     }
 })();
 
+// ── Dynamic Island ──
+(function () {
+    var island = document.getElementById('dynamicIsland');
+    var sectionLabel = document.getElementById('diSection');
+    if (!island || !sectionLabel) return;
+
+    var sections = document.querySelectorAll('section[id]');
+    var lastSection = '';
+
+    var sectionNames = {
+        en: { home: 'Home', about: 'About', tools: 'Tools', experience: 'Journey', portfolio: 'Portfolio', testimonials: 'Feedback', youtube: 'YouTube', contact: 'Contact' },
+        tn: { home: 'الرئيسية', about: 'من أنا', tools: 'الأدوات', experience: 'الرحلة', portfolio: 'أعمالي', testimonials: 'آراء', youtube: 'يوتيوب', contact: 'تواصل' }
+    };
+
+    function updateIsland() {
+        var scrollY = window.pageYOffset;
+        var lang = localStorage.getItem('preferredLanguage') || 'en';
+
+        if (scrollY > 300) {
+            island.classList.add('visible');
+        } else {
+            island.classList.remove('visible');
+        }
+
+        var current = 'home';
+        sections.forEach(function(sec) {
+            if (scrollY >= sec.offsetTop - 200) {
+                current = sec.id;
+            }
+        });
+
+        if (current !== lastSection) {
+            lastSection = current;
+            var names = sectionNames[lang] || sectionNames.en;
+            sectionLabel.textContent = names[current] || current;
+        }
+    }
+
+    window.addEventListener('scroll', updateIsland, { passive: true });
+    updateIsland();
+})();
+
 // ── Section Reveal on Scroll ──
 (function () {
     var revealSections = document.querySelectorAll('section:not(.hero)');

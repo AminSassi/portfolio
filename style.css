@@ -1860,6 +1860,83 @@ img.feedback-avatar {
     .feedback-stack { max-height: 300px; }
 }
 
+/* ── Dynamic Island ── */
+.dynamic-island {
+    position: fixed;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    height: 36px;
+    background: #111;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    overflow: hidden;
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                border-radius 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                top 0.4s ease;
+    width: 120px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dynamic-island.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.di-pill {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(96,184,255,0.15), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.dynamic-island:hover .di-pill {
+    opacity: 1;
+}
+
+.di-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+}
+
+.dynamic-island:hover {
+    width: 200px;
+    height: 44px;
+    border-radius: 24px;
+}
+
+.dynamic-island:hover .di-content {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.di-section {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.5px;
+}
+
+/* Hide dynamic island on mobile where nav is already visible */
+@media (max-width: 968px) {
+    .dynamic-island { display: none; }
+}
+
 /* ── Skip Link (Accessibility) ── */
 .skip-link {
     position: absolute;
