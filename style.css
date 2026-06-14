@@ -861,7 +861,7 @@ section .section-subtitle {
     padding: 6rem 3rem;
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 28px;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* ── 3D Coverflow Carousel ── */
@@ -1014,6 +1014,7 @@ section .section-subtitle {
     transition: background 0.2s, transform 0.2s var(--spring);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    pointer-events: auto;
 }
 .carousel-nav-btn:hover {
     background: rgba(255,255,255,0.2);

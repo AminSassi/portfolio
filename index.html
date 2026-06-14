@@ -449,9 +449,13 @@
 
                 function updateCarousel() {
                     const allItems = track.querySelectorAll('.carousel-item');
+                    const total = items.length;
                     allItems.forEach((el, i) => {
                         el.classList.remove('active', 'left-1', 'left-2', 'left-3', 'right-1', 'right-2', 'right-3', 'hidden');
-                        const diff = i - currentIndex;
+                        let diff = i - currentIndex;
+                        // Wrap diff for looping
+                        if (diff > total / 2) diff -= total;
+                        if (diff < -total / 2) diff += total;
                         if (diff === 0) el.classList.add('active');
                         else if (diff === -1) el.classList.add('left-1');
                         else if (diff === -2) el.classList.add('left-2');
@@ -466,11 +470,11 @@
                 }
 
                 document.getElementById('carouselPrev').addEventListener('click', () => {
-                    currentIndex = Math.max(0, currentIndex - 1);
+                    currentIndex = (currentIndex - 1 + items.length) % items.length;
                     updateCarousel();
                 });
                 document.getElementById('carouselNext').addEventListener('click', () => {
-                    currentIndex = Math.min(items.length - 1, currentIndex + 1);
+                    currentIndex = (currentIndex + 1) % items.length;
                     updateCarousel();
                 });
                 dotsContainer.addEventListener('click', (e) => {
@@ -486,16 +490,16 @@
                 track.addEventListener('touchend', e => {
                     const diff = touchStartX - e.changedTouches[0].clientX;
                     if (Math.abs(diff) > 50) {
-                        if (diff > 0 && currentIndex < items.length - 1) currentIndex++;
-                        else if (diff < 0 && currentIndex > 0) currentIndex--;
+                        if (diff > 0) currentIndex = (currentIndex + 1) % items.length;
+                        else currentIndex = (currentIndex - 1 + items.length) % items.length;
                         updateCarousel();
                     }
                 }, { passive: true });
 
                 // Keyboard nav
                 document.addEventListener('keydown', e => {
-                    if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; updateCarousel(); }
-                    if (e.key === 'ArrowRight' && currentIndex < items.length - 1) { currentIndex++; updateCarousel(); }
+                    if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel(); }
+                    if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % items.length; updateCarousel(); }
                 });
 
                 renderCarousel();
