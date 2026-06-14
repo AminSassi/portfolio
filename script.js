@@ -376,12 +376,6 @@ var observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
-document.querySelectorAll('.portfolio-item').forEach((item, i) => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateY(30px)';
-    item.style.transition = `opacity 0.6s ease ${i*0.08}s, transform 0.6s ease ${i*0.08}s`;
-    observer.observe(item);
-});
 document.querySelectorAll('.skill-item').forEach((item, i) => {
     item.style.opacity = '0';
     item.style.transform = 'translateY(24px)';

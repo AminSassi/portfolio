@@ -295,7 +295,12 @@
 <section id="portfolio">
     <h2 data-en="Portfolio" data-tn="أعمالي">Portfolio</h2>
     <p class="section-subtitle" data-en="A collection of my recent video projects" data-tn="مجموعة من آخر مشاريع الفيديو متاعي">A collection of my recent video projects</p>
-    <div class="portfolio-grid" id="portfolioGrid"></div>
+    <div class="portfolio-carousel" id="portfolioCarousel">
+        <div class="carousel-track" id="carouselTrack"></div>
+        <button class="carousel-nav-btn prev" id="carouselPrev">&#10094;</button>
+        <button class="carousel-nav-btn next" id="carouselNext">&#10095;</button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
 </section>
 
     <!-- Client Feedback Section -->
@@ -406,55 +411,118 @@
             const data = json.data || json;
             const lang = localStorage.getItem('preferredLanguage') || 'en';
 
-            // Portfolio
-            const grid = document.getElementById('portfolioGrid');
-            if (grid && data.portfolio) {
-                grid.innerHTML = data.portfolio.map(item => {
-                    const thumb = cloudinaryThumb(item.fullVideo);
-                    return `
-                    <div class="portfolio-item">
-                        <div class="video-wrapper" data-video="${item.fullVideo}">
-                            <video class="video-preview" poster="${thumb}" src="${item.fullVideo}" loop muted playsinline preload="metadata"></video>
-                            <div class="play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>${item.title[lang] || item.title.en}</h3>
-                            <p>${item.description[lang] || item.description.en}</p>
-                        </div>
-                    </div>`;
-                }).join('');
-                // Re-init video observers for dynamically loaded items
-                grid.querySelectorAll('.video-wrapper[data-video]').forEach(wrapper => {
-                    wrapper.addEventListener('click', () => {
-                        const src = wrapper.dataset.video;
-                        document.querySelectorAll('.video-preview').forEach(v => v.pause());
-                        const modalVideo = document.getElementById('modalVideo');
-                        const modal = document.getElementById('videoModal');
-                        modalVideo.src = src;
-                        try { modalVideo.currentTime = 0.01; } catch (e) {}
-                        modalVideo.load();
-                        modalVideo.play().catch(() => {});
-                        modal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        document.body.classList.add('modal-open');
+            // Portfolio Carousel
+            const track = document.getElementById('carouselTrack');
+            const dotsContainer = document.getElementById('carouselDots');
+            if (track && data.portfolio) {
+                let currentIndex = 0;
+                const items = data.portfolio;
+
+                function renderCarousel() {
+                    track.innerHTML = items.map((item, i) => {
+                        const thumb = cloudinaryThumb(item.fullVideo);
+                        return `
+                        <div class="carousel-item" data-index="${i}">
+                            <div class="video-wrapper" data-video="${item.fullVideo}">
+                                <video class="video-preview" poster="${thumb}" src="${item.fullVideo}" loop muted playsinline preload="metadata"></video>
+                                <div class="play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
+                            </div>
+                            <div class="portfolio-info">
+                                <h3>${item.title[lang] || item.title.en}</h3>
+                                <p>${item.description[lang] || item.description.en}</p>
+                            </div>
+                        </div>`;
+                    }).join('');
+
+                    dotsContainer.innerHTML = items.map((_, i) =>
+                        `<button class="carousel-dot${i === 0 ? ' active' : ''}" data-i="${i}"></button>`
+                    ).join('');
+
+                    updateCarousel();
+
+                    // Video click → modal
+                    track.querySelectorAll('.video-wrapper[data-video]').forEach(wrapper => {
+                        wrapper.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const src = wrapper.dataset.video;
+                            document.querySelectorAll('.video-preview').forEach(v => v.pause());
+                            const modalVideo = document.getElementById('modalVideo');
+                            const modal = document.getElementById('videoModal');
+                            modalVideo.src = src;
+                            try { modalVideo.currentTime = 0.01; } catch (err) {}
+                            modalVideo.load();
+                            modalVideo.play().catch(() => {});
+                            modal.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                            document.body.classList.add('modal-open');
+                        });
                     });
+
+                    // Init video observers
+                    track.querySelectorAll('.video-preview').forEach(video => {
+                        const markLoaded = () => {
+                            try { video.currentTime = 0.01; } catch (err) {}
+                            video.classList.add('loaded');
+                            video.pause();
+                        };
+                        if (video.readyState >= 3) markLoaded();
+                        else video.addEventListener('loadeddata', markLoaded, { once: true });
+                        previewObserver.observe(video);
+                    });
+                }
+
+                function updateCarousel() {
+                    const allItems = track.querySelectorAll('.carousel-item');
+                    allItems.forEach((el, i) => {
+                        el.classList.remove('active', 'left-1', 'left-2', 'left-3', 'right-1', 'right-2', 'right-3', 'hidden');
+                        const diff = i - currentIndex;
+                        if (diff === 0) el.classList.add('active');
+                        else if (diff === -1) el.classList.add('left-1');
+                        else if (diff === -2) el.classList.add('left-2');
+                        else if (diff <= -3) el.classList.add('left-3');
+                        else if (diff === 1) el.classList.add('right-1');
+                        else if (diff === 2) el.classList.add('right-2');
+                        else if (diff >= 3) el.classList.add('right-3');
+                    });
+                    dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+                        d.classList.toggle('active', i === currentIndex);
+                    });
+                }
+
+                document.getElementById('carouselPrev').addEventListener('click', () => {
+                    currentIndex = Math.max(0, currentIndex - 1);
+                    updateCarousel();
                 });
-                grid.querySelectorAll('.video-preview').forEach(video => {
-                    const markLoaded = () => {
-                        try { video.currentTime = 0.01; } catch (e) {}
-                        video.classList.add('loaded');
-                        video.pause();
-                    };
-                    if (video.readyState >= 3) markLoaded();
-                    else video.addEventListener('loadeddata', markLoaded, { once: true });
-                    previewObserver.observe(video);
+                document.getElementById('carouselNext').addEventListener('click', () => {
+                    currentIndex = Math.min(items.length - 1, currentIndex + 1);
+                    updateCarousel();
                 });
-                grid.querySelectorAll('.portfolio-item').forEach((item, i) => {
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateY(30px)';
-                    item.style.transition = `opacity 0.6s ease ${i*0.08}s, transform 0.6s ease ${i*0.08}s`;
-                    observer.observe(item);
+                dotsContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('carousel-dot')) {
+                        currentIndex = parseInt(e.target.dataset.i);
+                        updateCarousel();
+                    }
                 });
+
+                // Touch/swipe support
+                let touchStartX = 0;
+                track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+                track.addEventListener('touchend', e => {
+                    const diff = touchStartX - e.changedTouches[0].clientX;
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0 && currentIndex < items.length - 1) currentIndex++;
+                        else if (diff < 0 && currentIndex > 0) currentIndex--;
+                        updateCarousel();
+                    }
+                }, { passive: true });
+
+                // Keyboard nav
+                document.addEventListener('keydown', e => {
+                    if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; updateCarousel(); }
+                    if (e.key === 'ArrowRight' && currentIndex < items.length - 1) { currentIndex++; updateCarousel(); }
+                });
+
+                renderCarousel();
             }
 
             // Feedback
