@@ -470,6 +470,43 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
     updateStack();
 })();
 
+// ── Hero Icon Parallax (mouse follow) ──
+(function () {
+    var icons = document.querySelectorAll('.hero-icon');
+    if (!icons.length) return;
+
+    var heroSection = document.querySelector('.hero');
+    var mouseX = 0, mouseY = 0;
+    var currentX = [0, 0, 0], currentY = [0, 0, 0];
+    var rafId = null;
+
+    function animateIcons() {
+        icons.forEach(function(icon, i) {
+            var speed = 0.03 + i * 0.015;
+            currentX[i] += (mouseX - currentX[i]) * speed;
+            currentY[i] += (mouseY - currentY[i]) * speed;
+            var baseX = currentX[i] * (15 + i * 8);
+            var baseY = currentY[i] * (10 + i * 6);
+            icon.style.translate = baseX + 'px ' + baseY + 'px';
+        });
+        rafId = requestAnimationFrame(animateIcons);
+    }
+
+    if (heroSection) {
+        heroSection.addEventListener('mousemove', function(e) {
+            var rect = heroSection.getBoundingClientRect();
+            mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+            mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+            if (!rafId) rafId = requestAnimationFrame(animateIcons);
+        }, { passive: true });
+
+        heroSection.addEventListener('mouseleave', function() {
+            mouseX = 0;
+            mouseY = 0;
+        }, { passive: true });
+    }
+})();
+
 // ── Section Reveal on Scroll ──
 (function () {
     var revealSections = document.querySelectorAll('section:not(.hero)');

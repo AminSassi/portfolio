@@ -355,7 +355,14 @@ nav ul a:hover::after { width: 100%; }
     position: absolute;
     z-index: 3;
     filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
-    animation: heroIconFloat 3.5s ease-in-out infinite alternate;
+    animation: heroIconFloat 4s ease-in-out infinite alternate, heroIconGlow 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+.hero-icon:hover {
+    transform: scale(1.2) !important;
+    filter: drop-shadow(0 8px 32px rgba(96,184,255,0.5));
 }
 
 .hero-icon-ae {
@@ -375,8 +382,14 @@ nav ul a:hover::after { width: 100%; }
 }
 
 @keyframes heroIconFloat {
-    from { transform: translateY(0px) rotate(-2deg); }
-    to   { transform: translateY(-12px) rotate(2deg); }
+    0% { transform: translateY(0px) rotate(-3deg) scale(1); }
+    50% { transform: translateY(-18px) rotate(3deg) scale(1.03); }
+    100% { transform: translateY(-6px) rotate(-1deg) scale(0.98); }
+}
+
+@keyframes heroIconGlow {
+    0%, 100% { opacity: 0.85; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5)); }
+    50% { opacity: 1; filter: drop-shadow(0 8px 32px rgba(96,184,255,0.3)); }
 }
 
 /* Text overlay — sits above the portrait */
