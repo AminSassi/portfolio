@@ -268,25 +268,26 @@ const modal = document.getElementById('videoModal');
 const modalVideo = document.getElementById('modalVideo');
 const modalClose = document.getElementById('modalClose');
 
-document.querySelectorAll('.video-wrapper[data-video]').forEach(wrapper => {
-    wrapper.addEventListener('click', () => {
-        const src = wrapper.dataset.video;
+// Use event delegation so it works for dynamically added videos
+document.addEventListener('click', function(e) {
+    var wrapper = e.target.closest('.video-wrapper[data-video]');
+    if (!wrapper) return;
+    e.preventDefault();
+    e.stopPropagation();
 
-        // Stop preview videos while the modal is open to reduce CPU/GPU load
-        document.querySelectorAll('.video-preview').forEach(v => v.pause());
+    var src = wrapper.dataset.video;
+    document.querySelectorAll('.video-preview').forEach(function(v) { v.pause(); });
 
-        modalVideo.src = src;
-        modalVideo.muted = true;
-        try { modalVideo.currentTime = 0.01; } catch (err) {}
-        modalVideo.load();
-        modalVideo.play().then(() => {
-            // Unmute after play starts (needed for mobile autoplay policy)
-            setTimeout(() => { modalVideo.muted = false; }, 300);
-        }).catch(() => {});
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        document.body.classList.add('modal-open');
-    });
+    modalVideo.src = src;
+    modalVideo.muted = true;
+    try { modalVideo.currentTime = 0.01; } catch (err) {}
+    modalVideo.load();
+    modalVideo.play().then(function() {
+        setTimeout(function() { modalVideo.muted = false; }, 300);
+    }).catch(function() {});
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
 });
 
 function closeModal() {
