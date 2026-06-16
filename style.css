@@ -1580,7 +1580,7 @@ footer p { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
     nav .container { padding: 0.8rem 1rem; }
     section { padding: 3rem 1rem; }
     .glass-cursor, .glass-cursor-ring { display: none; }
-    .hero-portrait { bottom: 5%; width: 100vw; }
+    .hero-portrait { bottom: 5%; width: 130vw; }
     .hero-overlay-text { padding: 0 1rem 2rem; }
     .stats-section { padding: 2rem 1rem; }
     .stats-container { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
@@ -2297,7 +2297,7 @@ img.feedback-avatar {
 }
 
 @media (max-width: 480px) {
-    .hero-portrait { bottom: 5%; width: 110vw; }
+    .hero-portrait { bottom: 5%; width: 150vw; }
     .hero-overlay-text h1 { font-size: 1.4rem; }
     .hero-tagline { font-size: 0.75rem; }
     .tools-grid { grid-template-columns: repeat(2, 1fr); }
