@@ -1581,9 +1581,12 @@ footer p { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
     nav .container { padding: 0.8rem 1rem; }
     section { padding: 3rem 1rem; }
     .glass-cursor, .glass-cursor-ring { display: none; }
-    .hero-portrait { bottom: -10%; width: 250vw; max-width: none; }
+    .hero-portrait { bottom: -2%; width: 250vw; max-width: none; }
     .hero-portrait img { mask-image: radial-gradient(ellipse 70% 80% at 50% 40%, black 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 40%, black 30%, transparent 75%); }
     .hero-overlay-text { padding: 0 1rem 4rem; position: relative; z-index: 5; }
+    .hero-icon-ae { top: 30%; left: 5%; }
+    .hero-icon-pr { top: 55%; right: 5%; }
+    .hero-icon-ps { top: 70%; left: 8%; }
     .stats-section { padding: 2rem 1rem; }
     .stats-container { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
     .stat-card { padding: 1.2rem 0.8rem; }
@@ -2299,7 +2302,7 @@ img.feedback-avatar {
 }
 
 @media (max-width: 480px) {
-    .hero-portrait { bottom: -10%; width: 280vw; max-width: none; }
+    .hero-portrait { bottom: -2%; width: 280vw; max-width: none; }
     .hero-overlay-text h1 { font-size: 1.4rem; }
     .hero-tagline { font-size: 0.75rem; }
     .tools-grid { grid-template-columns: repeat(2, 1fr); }
