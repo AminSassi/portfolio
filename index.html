@@ -291,7 +291,7 @@
     <div class="video-modal" id="videoModal">
         <div class="video-modal-inner">
             <div class="video-modal-close" id="modalClose">✕</div>
-            <video id="modalVideo" controls playsinline style="width:100%;height:100%;object-fit:cover;"></video>
+            <video id="modalVideo" controls muted playsinline style="width:100%;height:100%;object-fit:cover;"></video>
         </div>
     </div>
 
@@ -388,7 +388,7 @@
                         return `
                         <div class="carousel-item" data-index="${i}">
                             <div class="video-wrapper" data-video="${item.fullVideo}">
-                                <video class="video-preview" poster="${thumb}" src="${item.fullVideo}" loop muted playsinline preload="metadata"></video>
+                                <video class="video-preview" poster="${thumb}" src="${item.fullVideo}" loop muted playsinline preload="metadata" webkit-playsinline></video>
                                 <div class="play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
                             </div>
                             <div class="portfolio-info">

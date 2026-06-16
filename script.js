@@ -276,10 +276,13 @@ document.querySelectorAll('.video-wrapper[data-video]').forEach(wrapper => {
         document.querySelectorAll('.video-preview').forEach(v => v.pause());
 
         modalVideo.src = src;
-        // Reset to the start frame so the modal doesn't briefly show the previous clip.
+        modalVideo.muted = true;
         try { modalVideo.currentTime = 0.01; } catch (err) {}
         modalVideo.load();
-        modalVideo.play().catch(() => {});
+        modalVideo.play().then(() => {
+            // Unmute after play starts (needed for mobile autoplay policy)
+            setTimeout(() => { modalVideo.muted = false; }, 300);
+        }).catch(() => {});
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         document.body.classList.add('modal-open');
@@ -433,11 +436,13 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
             // stop whatever else is playing
             stopActive();
 
-            // play this one
-            audio.play().catch(function(err) { console.warn('play failed', err); });
-            iconPlay.style.display  = 'none';
-            iconPause.style.display = '';
-            activePair = { audio: audio, player: player, bars: bars };
+            // ensure audio is loaded
+            audio.load();
+            audio.play().then(function() {
+                iconPlay.style.display  = 'none';
+                iconPause.style.display = '';
+                activePair = { audio: audio, player: player, bars: bars };
+            }).catch(function(err) { console.warn('play failed', err); });
         });
     });
 })();
