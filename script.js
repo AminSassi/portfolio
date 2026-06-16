@@ -470,6 +470,42 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
     updateStack();
 })();
 
+// ── Animated Stat Counters ──
+(function () {
+    var counters = document.querySelectorAll('.stat-number[data-target]');
+    if (!counters.length) return;
+
+    var animated = new Set();
+
+    var counterObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting && !animated.has(entry.target)) {
+                animated.add(entry.target);
+                var el = entry.target;
+                var target = parseInt(el.getAttribute('data-target'));
+                var suffix = el.getAttribute('data-suffix') || '';
+                var duration = 1500;
+                var startTime = null;
+
+                function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+                function animate(now) {
+                    if (!startTime) startTime = now;
+                    var progress = Math.min((now - startTime) / duration, 1);
+                    var value = Math.floor(easeOutCubic(progress) * target);
+                    el.textContent = value + suffix;
+                    if (progress < 1) requestAnimationFrame(animate);
+                    else el.textContent = target + suffix;
+                }
+
+                requestAnimationFrame(animate);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(function(c) { counterObserver.observe(c); });
+})();
+
 // ── Hero Icon Parallax (mouse follow) ──
 (function () {
     var icons = document.querySelectorAll('.hero-icon');

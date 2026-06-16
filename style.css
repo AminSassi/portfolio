@@ -101,6 +101,68 @@ body.modal-open {
 body:has(a:hover) .glass-cursor-ring,
 body:has(button:hover) .glass-cursor-ring { width: 60px; height: 60px; border-color: rgba(100,180,255,0.5); }
 
+/* Custom cursor states */
+body:has(.video-wrapper:hover) .glass-cursor {
+    width: 60px; height: 60px;
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.6);
+    mix-blend-mode: normal;
+}
+
+body:has(.video-wrapper:hover) .glass-cursor-ring {
+    width: 80px; height: 80px;
+    border-color: rgba(96,184,255,0.6);
+    border-width: 2px;
+}
+
+body:has(.tool-item:hover) .glass-cursor {
+    width: 50px; height: 50px;
+    background: rgba(96,184,255,0.2);
+    border: 1.5px solid rgba(96,184,255,0.5);
+    mix-blend-mode: normal;
+}
+
+body:has(.tool-item:hover) .glass-cursor-ring {
+    width: 70px; height: 70px;
+    border-color: rgba(96,184,255,0.4);
+}
+
+body:has(.cta-button:hover) .glass-cursor {
+    width: 50px; height: 50px;
+    background: rgba(96,184,255,0.25);
+    border: 1.5px solid rgba(96,184,255,0.6);
+    mix-blend-mode: normal;
+}
+
+body:has(.cta-button:hover) .glass-cursor-ring {
+    width: 65px; height: 65px;
+    border-color: rgba(96,184,255,0.5);
+}
+
+body:has(.timeline-content:hover) .glass-cursor {
+    width: 45px; height: 45px;
+    background: rgba(160,100,255,0.2);
+    border: 1.5px solid rgba(160,100,255,0.5);
+    mix-blend-mode: normal;
+}
+
+body:has(.timeline-content:hover) .glass-cursor-ring {
+    width: 60px; height: 60px;
+    border-color: rgba(160,100,255,0.4);
+}
+
+body:has(.feedback-card:hover) .glass-cursor {
+    width: 48px; height: 48px;
+    background: rgba(255,200,50,0.15);
+    border: 1.5px solid rgba(255,200,50,0.5);
+    mix-blend-mode: normal;
+}
+
+body:has(.feedback-card:hover) .glass-cursor-ring {
+    width: 65px; height: 65px;
+    border-color: rgba(255,200,50,0.4);
+}
+
 /* ── Navigation — Liquid Glass Floating Pill ── */
 nav {
     position: fixed;
