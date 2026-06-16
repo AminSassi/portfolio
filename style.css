@@ -2221,3 +2221,69 @@ img.feedback-avatar {
     .timeline-dot { left: -26px; width: 10px; height: 10px; }
     .timeline-content { padding: 1.2rem 1.4rem; }
 }
+
+/* ── Comprehensive Mobile Fixes ── */
+@media (max-width: 768px) {
+    /* Reduce section padding */
+    .stats-section { padding: 2.5rem 1.5rem; }
+    .stats-container { grid-template-columns: 1fr; gap: 1rem; }
+    .stat-card { padding: 1.5rem 1rem; }
+    .stat-card .stat-number { font-size: 2.2rem; }
+    .stat-card .stat-label { font-size: 0.82rem; }
+
+    .tools-section { padding: 3rem 1.5rem; }
+    .tools-grid { grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+    .tool-item { padding: 1.2rem 0.6rem; }
+    .tool-item span { font-size: 0.72rem; }
+    .tool-icon svg { width: 36px; height: 36px; }
+
+    .timeline-section { padding: 3rem 1.5rem; }
+    .timeline { padding-left: 28px; }
+    .timeline::before { left: 6px; }
+    .timeline-dot { left: -24px; width: 8px; height: 8px; }
+    .timeline-content { padding: 1rem 1.2rem; }
+    .timeline-content h3 { font-size: 1rem; }
+    .timeline-content p { font-size: 0.82rem; }
+
+    .about-content { grid-template-columns: 1fr; gap: 2rem; }
+    .about-text { font-size: 0.95rem; }
+    .skills-grid { grid-template-columns: 1fr; gap: 1rem; }
+
+    #portfolio { padding: 3rem 1rem; }
+    .portfolio-carousel { height: 320px; }
+
+    .feedback-section { padding: 3rem 1rem; }
+    .feedback-stack { max-height: 280px; }
+
+    .youtube-section { padding: 3rem 1rem; }
+
+    footer { padding: 1.5rem 1rem; }
+    footer p { font-size: 0.75rem; }
+
+    .hero-portrait { bottom: -8%; width: 120vw; }
+    .hero-overlay-text { padding: 0 1rem 3rem; }
+    .hero-tagline { font-size: 0.8rem; }
+    .cta-group { gap: 0.6rem; }
+    .cta-button, .cta-secondary { padding: 0.7rem 1.4rem; font-size: 0.82rem; }
+
+    .contact-form { padding: 1.5rem 1rem; border-radius: 20px; }
+    .form-group input, .form-group textarea { padding: 0.8rem 1rem; font-size: 0.9rem; }
+
+    .social-links a { width: 44px; height: 44px; }
+    .social-links a svg { width: 18px; height: 18px; }
+
+    .back-to-top { width: 40px; height: 40px; bottom: 16px; right: 16px; font-size: 1.1rem; }
+
+    .skip-link { left: 8px; font-size: 0.85rem; padding: 0.6rem 1rem; }
+}
+
+@media (max-width: 480px) {
+    .hero-portrait { bottom: -12%; width: 140vw; }
+    .hero-overlay-text h1 { font-size: 1.4rem; }
+    .hero-tagline { font-size: 0.75rem; }
+    .tools-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-container { grid-template-columns: 1fr 1fr; }
+    .stat-card .stat-number { font-size: 1.8rem; }
+    .cta-group { flex-direction: column; }
+    .cta-button, .cta-secondary { width: 100%; justify-content: center; }
+}
