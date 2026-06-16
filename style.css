@@ -1575,19 +1575,46 @@ footer p { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
 }
 
 @media (max-width: 600px) {
-    section h2 { font-size: 2.4rem; }
-    .hero-overlay-text h1 { font-size: 1.6rem; letter-spacing: -1px; }
-    .hero-tagline { font-size: 0.85rem; }
-    .hero-icon-ae { width: 52px; height: 52px; left: calc(50% - 110px); top: 18%; }
-    .hero-icon-pr { width: 44px; height: 44px; right: 3%; top: 32%; }
-    .hero-icon-ps { width: 40px; height: 40px; left: 3%; top: 40%; }
+    section h2 { font-size: 2rem; }
+    .hero-overlay-text h1 { font-size: 1.5rem; letter-spacing: -1px; }
+    .hero-tagline { font-size: 0.8rem; margin-bottom: 1.5rem; }
+    .hero-icon-ae { width: 40px; height: 40px; left: calc(50% - 90px); top: 15%; }
+    .hero-icon-pr { width: 36px; height: 36px; right: 5%; top: 25%; }
+    .hero-icon-ps { width: 32px; height: 32px; left: 5%; top: 35%; }
     .skills-grid { grid-template-columns: 1fr; }
-    .contact-form { padding: 2rem 1.5rem; }
-    .stat-card .stat-number { font-size: 2.5rem; }
-    .cta-button, .cta-secondary { padding: 0.85rem 1.8rem; font-size: 0.88rem; }
-    nav .container { padding: 0.9rem 1rem; }
-    section { padding: 4rem 1.5rem; }
+    .contact-form { padding: 1.5rem 1rem; }
+    .stat-card .stat-number { font-size: 2rem; }
+    .cta-button, .cta-secondary { padding: 0.7rem 1.5rem; font-size: 0.85rem; }
+    nav .container { padding: 0.8rem 1rem; }
+    section { padding: 3rem 1rem; }
     .glass-cursor, .glass-cursor-ring { display: none; }
+    .hero-portrait { bottom: 5%; width: 100vw; }
+    .hero-overlay-text { padding: 0 1rem 2rem; }
+    .stats-section { padding: 2rem 1rem; }
+    .stats-container { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .stat-card { padding: 1.2rem 0.8rem; }
+    .about-content { grid-template-columns: 1fr; gap: 1.5rem; }
+    .about-text { font-size: 0.9rem; }
+    .timeline-section { padding: 3rem 1rem; }
+    .tools-section { padding: 3rem 1rem; }
+    .tools-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+    .tool-item { padding: 1rem 0.5rem; }
+    .tool-item span { font-size: 0.7rem; }
+    .tool-icon svg { width: 32px; height: 32px; }
+    #portfolio { padding: 2rem 0.5rem; }
+    .portfolio-carousel { height: 280px; }
+    .carousel-nav-btn { width: 30px; height: 30px; font-size: 0.9rem; }
+    .carousel-nav-btn.prev { left: 0.3rem; }
+    .carousel-nav-btn.next { right: 0.3rem; }
+    .feedback-section { padding: 2rem 1rem; }
+    .youtube-section { padding: 2rem 1rem; }
+    footer { padding: 1.5rem 1rem; }
+    footer p { font-size: 0.7rem; }
+    .social-links a { width: 40px; height: 40px; }
+    .social-links a svg { width: 16px; height: 16px; }
+    .back-to-top { width: 36px; height: 36px; bottom: 12px; right: 12px; font-size: 1rem; }
+    .cta-group { gap: 0.5rem; }
+    .cta-group a { width: 100%; justify-content: center; }
 }
 
 /* ── Adobe Logos Background — static, no animation cost ── */
