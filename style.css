@@ -2260,7 +2260,7 @@ img.feedback-avatar {
     footer { padding: 1.5rem 1rem; }
     footer p { font-size: 0.75rem; }
 
-    .hero-portrait { bottom: -8%; width: 120vw; }
+    .hero-portrait { bottom: 5%; width: 100vw; }
     .hero-overlay-text { padding: 0 1rem 3rem; }
     .hero-tagline { font-size: 0.8rem; }
     .cta-group { gap: 0.6rem; }
@@ -2278,7 +2278,7 @@ img.feedback-avatar {
 }
 
 @media (max-width: 480px) {
-    .hero-portrait { bottom: -12%; width: 140vw; }
+    .hero-portrait { bottom: 5%; width: 110vw; }
     .hero-overlay-text h1 { font-size: 1.4rem; }
     .hero-tagline { font-size: 0.75rem; }
     .tools-grid { grid-template-columns: repeat(2, 1fr); }
