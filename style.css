@@ -1570,9 +1570,10 @@ footer p { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
     section h2 { font-size: 2rem; }
     .hero-overlay-text h1 { font-size: 1.5rem; letter-spacing: -1px; }
     .hero-tagline { font-size: 0.8rem; margin-bottom: 1.5rem; }
-    .hero-icon-ae { width: 40px; height: 40px; left: calc(50% - 90px); top: 15%; }
-    .hero-icon-pr { width: 36px; height: 36px; right: 5%; top: 25%; }
-    .hero-icon-ps { width: 32px; height: 32px; left: 5%; top: 35%; }
+    .hero-icon-ae { width: 36px; height: 36px; left: calc(50% - 80px); top: 12%; }
+    .hero-icon-pr { width: 32px; height: 32px; right: 8%; top: 22%; }
+    .hero-icon-ps { width: 28px; height: 28px; left: 8%; top: 30%; }
+    .bg-logos { display: none; }
     .skills-grid { grid-template-columns: 1fr; }
     .contact-form { padding: 1.5rem 1rem; }
     .stat-card .stat-number { font-size: 2rem; }
@@ -1580,8 +1581,8 @@ footer p { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
     nav .container { padding: 0.8rem 1rem; }
     section { padding: 3rem 1rem; }
     .glass-cursor, .glass-cursor-ring { display: none; }
-    .hero-portrait { bottom: 15%; width: 150vw; }
-    .hero-overlay-text { padding: 0 1rem 2rem; }
+    .hero-portrait { bottom: 0; width: 180vw; max-width: none; }
+    .hero-overlay-text { padding: 0 1rem 4rem; position: relative; z-index: 5; }
     .stats-section { padding: 2rem 1rem; }
     .stats-container { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
     .stat-card { padding: 1.2rem 0.8rem; }
@@ -2297,7 +2298,7 @@ img.feedback-avatar {
 }
 
 @media (max-width: 480px) {
-    .hero-portrait { bottom: 15%; width: 170vw; }
+    .hero-portrait { bottom: 0; width: 200vw; max-width: none; }
     .hero-overlay-text h1 { font-size: 1.4rem; }
     .hero-tagline { font-size: 0.75rem; }
     .tools-grid { grid-template-columns: repeat(2, 1fr); }
