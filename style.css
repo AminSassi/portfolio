@@ -884,6 +884,125 @@ nav ul a:hover::after { width: 100%; }
     letter-spacing: 0.5px;
 }
 
+/* ── Featured Project Section ── */
+.featured-section {
+    max-width: 1100px;
+    margin: 2rem auto 0;
+    padding: 0 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.featured-badge {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.featured-badge span {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    background: rgba(96,184,255,0.1);
+    border: 1px solid rgba(96,184,255,0.25);
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: var(--bright-blue);
+    text-transform: uppercase;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.featured-video .featured-video-wrapper {
+    aspect-ratio: 9 / 16;
+    max-height: 480px;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.featured-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.featured-client {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--bright-blue);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.featured-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin: 0;
+    background: none;
+    -webkit-text-fill-color: #fff;
+    text-align: left;
+}
+
+.featured-role {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+}
+
+.featured-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.featured-detail-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.featured-detail p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.featured-tools {
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.35);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+    .featured-section { padding: 0 1.5rem; }
+    .featured-grid { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem; }
+    .featured-video .featured-video-wrapper { max-height: 400px; }
+    .featured-title { font-size: 1.4rem; text-align: center; }
+    .featured-client, .featured-role { text-align: center; }
+    .featured-info { align-items: center; text-align: center; }
+}
+
 /* ── Section Styles ── */
 section {
     padding: 4.5rem 3rem;

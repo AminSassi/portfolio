@@ -171,6 +171,41 @@
         </div>
     </section>
 
+    <!-- Featured Project -->
+    <section id="featured" class="featured-section">
+        <div class="featured-badge">
+            <span data-en="FEATURED PROJECT" data-tn="مشروع مميز">FEATURED PROJECT</span>
+        </div>
+        <div class="featured-grid">
+            <div class="featured-video">
+                <div class="video-wrapper featured-video-wrapper" id="featuredVideoWrapper">
+                    <video class="video-preview" id="featuredVideo" loop muted playsinline preload="metadata"></video>
+                    <div class="play-btn"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>
+                </div>
+            </div>
+            <div class="featured-info">
+                <span class="featured-client" id="featuredClient"></span>
+                <h3 class="featured-title" id="featuredTitle"></h3>
+                <span class="featured-role" id="featuredRole"></span>
+                <div class="featured-details">
+                    <div class="featured-detail">
+                        <span class="featured-detail-label" data-en="The Challenge" data-tn="التحدي">The Challenge</span>
+                        <p id="featuredProblem"></p>
+                    </div>
+                    <div class="featured-detail">
+                        <span class="featured-detail-label" data-en="What I Did" data-tn="اللي عملتو">What I Did</span>
+                        <p id="featuredSolution"></p>
+                    </div>
+                    <div class="featured-detail">
+                        <span class="featured-detail-label" data-en="The Result" data-tn="النتيجة">The Result</span>
+                        <p id="featuredImpact"></p>
+                    </div>
+                </div>
+                <div class="featured-tools" id="featuredTools"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" style="margin-top: 3rem;">
         <h2 data-en="About Me" data-tn="من أنا">About Me</h2>
@@ -373,6 +408,24 @@
             const json = await res.json();
             const data = json.data || json;
             const lang = localStorage.getItem('preferredLanguage') || 'en';
+
+            // Featured Project
+            if (data.featured) {
+                const f = data.featured;
+                const thumb = cloudinaryThumb(f.fullVideo);
+                document.getElementById('featuredVideo').poster = thumb;
+                document.getElementById('featuredVideo').src = f.fullVideo;
+                document.getElementById('featuredClient').textContent = f.client;
+                document.getElementById('featuredTitle').textContent = f.title[lang] || f.title.en;
+                document.getElementById('featuredRole').textContent = f.role[lang] || f.role.en;
+                document.getElementById('featuredProblem').textContent = f.problem[lang] || f.problem.en;
+                document.getElementById('featuredSolution').textContent = f.solution[lang] || f.solution.en;
+                document.getElementById('featuredImpact').textContent = f.impact[lang] || f.impact.en;
+                document.getElementById('featuredTools').textContent = f.tools || '';
+                // Init video observer
+                const fv = document.getElementById('featuredVideo');
+                if (fv) { fv.classList.add('loaded'); previewObserver.observe(fv); }
+            }
 
             // Portfolio Carousel
             const track = document.getElementById('carouselTrack');
