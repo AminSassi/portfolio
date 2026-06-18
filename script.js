@@ -351,10 +351,9 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
     observer.observe(item);
 });
 
-// ── Voice Players (event delegation for dynamic cards) ──
+// Voice Players
 (function () {
-    var activePair = null;
-    var initialized = new WeakSet();
+    let activePair = null; // { audio, player, bars }
 
     function fmt(s) {
         if (!isFinite(s) || s < 0) return '0:00';
@@ -396,10 +395,7 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
         activePair = null;
     }
 
-    function initPlayer(player) {
-        if (initialized.has(player)) return;
-        initialized.add(player);
-
+    document.querySelectorAll('.voice-player').forEach(function(player) {
         var btn       = player.querySelector('.voice-play-btn');
         var iconPlay  = player.querySelector('.icon-play');
         var iconPause = player.querySelector('.icon-pause');
@@ -408,6 +404,7 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
         var audio     = player.querySelector('audio');
         var src       = player.getAttribute('data-src');
 
+        // set src directly
         audio.src = src;
 
         audio.addEventListener('loadedmetadata', function() {
@@ -431,12 +428,16 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
             e.preventDefault();
             e.stopPropagation();
 
+            // clicking the active player = pause it
             if (activePair && activePair.audio === audio) {
                 stopActive();
                 return;
             }
 
+            // stop whatever else is playing
             stopActive();
+
+            // ensure audio is loaded
             audio.load();
             audio.play().then(function() {
                 iconPlay.style.display  = 'none';
@@ -444,22 +445,7 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
                 activePair = { audio: audio, player: player, bars: bars };
             }).catch(function(err) { console.warn('play failed', err); });
         });
-    }
-
-    // Observe for dynamically added voice players
-    var voiceObserver = new MutationObserver(function(mutations) {
-        mutations.forEach(function(m) {
-            m.addedNodes.forEach(function(node) {
-                if (node.nodeType !== 1) return;
-                if (node.classList && node.classList.contains('voice-player')) initPlayer(node);
-                node.querySelectorAll && node.querySelectorAll('.voice-player').forEach(initPlayer);
-            });
-        });
     });
-    voiceObserver.observe(document.body, { childList: true, subtree: true });
-
-    // Init any existing ones
-    document.querySelectorAll('.voice-player').forEach(initPlayer);
 })();
 
 
@@ -619,77 +605,4 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
     revealSections.forEach(function(sec) { revealObserver.observe(sec); });
-})();
-
-// ── Scroll Indicator Fade ──
-(function () {
-    var indicator = document.getElementById('scrollIndicator');
-    if (!indicator) return;
-
-    function checkScroll() {
-        if (window.pageYOffset > 150) {
-            indicator.classList.add('hidden');
-        } else {
-            indicator.classList.remove('hidden');
-        }
-    }
-
-    window.addEventListener('scroll', checkScroll, { passive: true });
-})();
-
-// ── Enhanced Scroll Reveal for child elements ──
-(function () {
-    var staggerContainers = document.querySelectorAll('.stats-container, .skills-grid, .tools-marquee, .cta-social-row');
-    staggerContainers.forEach(function(el) { el.classList.add('reveal-stagger'); });
-
-    var enhancedObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-            }
-        });
-    }, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
-
-    staggerContainers.forEach(function(el) { enhancedObserver.observe(el); });
-})();
-
-// ── Portfolio Card Grid (Feature 2) ──
-(function () {
-    var cardsContainer = document.getElementById('portfolioCards');
-    if (!cardsContainer) return;
-
-    fetch('data.json')
-        .then(function(res) { return res.json(); })
-        .then(function(json) {
-            var data = json.data || json;
-            if (!data.portfolio) return;
-            var lang = localStorage.getItem('preferredLanguage') || 'en';
-
-            cardsContainer.innerHTML = data.portfolio.map(function(item, i) {
-                var thumb = '';
-                if (item.fullVideo && item.fullVideo.includes('cloudinary.com')) {
-                    thumb = item.fullVideo.replace('/video/upload/', '/video/upload/w_800,c_fill/').replace(/\.mp4$/, '.jpg');
-                }
-                var desc = item.description ? (item.description[lang] || item.description.en) : '';
-                return '<div class="portfolio-card" style="animation-delay:' + (i * 0.08) + 's">' +
-                    '<div class="card-video" data-video="' + item.fullVideo + '">' +
-                        '<video class="video-preview" poster="' + thumb + '" src="' + item.fullVideo + '" loop muted playsinline preload="metadata"></video>' +
-                        '<div class="card-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>' +
-                    '</div>' +
-                    '<div class="card-body">' +
-                        '<h3 class="card-title">' + (item.title[lang] || item.title.en) + '</h3>' +
-                        '<p class="card-desc">' + desc + '</p>' +
-                    '</div>' +
-                '</div>';
-            }).join('');
-
-            // Observe card videos for lazy playback
-            cardsContainer.querySelectorAll('.video-preview').forEach(function(video) {
-                video.classList.add('loaded');
-                if (typeof previewObserver !== 'undefined') {
-                    previewObserver.observe(video);
-                }
-            });
-        })
-        .catch(function() {});
 })();
