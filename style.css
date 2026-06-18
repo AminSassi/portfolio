@@ -401,7 +401,7 @@ nav ul a:hover::after { width: 100%; }
     position: absolute;
     bottom: 4%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(1.15);
     width: clamp(900px, 120vw, 1500px);
     z-index: 2;
     display: flex;
@@ -409,6 +409,31 @@ nav ul a:hover::after { width: 100%; }
     justify-content: center;
     pointer-events: none;
     animation: heroPortraitIn 1.2s var(--smooth) 0.1s both;
+    transition: transform 0.1s linear;
+    will-change: transform;
+}
+
+.hero-cinematic.scrolled .hero-portrait {
+    transform: translateX(-50%) scale(1);
+}
+
+.hero-overlay-text {
+    position: relative;
+    z-index: 4;
+    text-align: center;
+    padding: 0 1.5rem 5rem;
+    width: 100%;
+    max-width: 900px;
+    animation: glassReveal 1s var(--smooth) 0.3s both;
+    margin-top: auto;
+    pointer-events: none;
+    transition: opacity 0.1s linear, transform 0.1s linear;
+    will-change: opacity, transform;
+}
+
+.hero-cinematic.scrolled .hero-overlay-text {
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .hero-portrait img {
@@ -505,6 +530,8 @@ nav ul a:hover::after { width: 100%; }
     /* push text to bottom so portrait fills the upper space */
     margin-top: auto;
     pointer-events: none;
+    transition: opacity 0.1s linear, transform 0.1s linear;
+    will-change: opacity, transform;
 }
 
 .hero-overlay-text .cta-group {

@@ -681,3 +681,44 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
         }
     }, { passive: true });
 })();
+
+// ── Hero Scroll Zoom-Out Effect ──
+(function () {
+    var hero = document.querySelector('.hero-cinematic');
+    if (!hero) return;
+
+    var ticking = false;
+    var maxScroll = window.innerHeight * 0.6;
+
+    function updateHeroZoom() {
+        var scrollY = window.pageYOffset;
+        var progress = Math.min(scrollY / maxScroll, 1);
+
+        // Scale from 1.15 to 1.0
+        var scale = 1.15 - (0.15 * progress);
+        hero.querySelector('.hero-portrait').style.transform = 'translateX(-50%) scale(' + scale + ')';
+
+        // Fade out text
+        var overlay = hero.querySelector('.hero-overlay-text');
+        if (overlay) {
+            overlay.style.opacity = 1 - (progress * 1.5);
+            overlay.style.transform = 'translateY(' + (progress * 30) + 'px)';
+        }
+
+        // Toggle scrolled class for CSS transitions
+        if (scrollY > 20) {
+            hero.classList.add('scrolled');
+        } else {
+            hero.classList.remove('scrolled');
+        }
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(updateHeroZoom);
+        }
+    }, { passive: true });
+})();
