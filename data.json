@@ -5,47 +5,43 @@
       "tn": "أمين ساسي"
     },
     "role": {
-      "en": "Video Editor",
-      "tn": "مونتير فيديو"
+      "en": "Video Editor & Motion Designer",
+      "tn": "مونتير فيديو ومصمم موشن"
     },
     "taglineTop": {
-      "en": "CRAFTING STORIES",
-      "tn": "نصنع القصص"
+      "en": "I TURN IDEAS INTO",
+      "tn": "نحوّل الأفكار إلى"
     },
     "taglineBottom": {
-      "en": "That captivate and inspire.",
-      "tn": "التي تشدّ وتلهِم."
+      "en": "visual stories that sell.",
+      "tn": "قصص بصرية تبيع."
     }
   },
   "stats": [
     {
       "number": { "en": "20+", "tn": "20+" },
-      "label": { "en": "Projects Completed", "tn": "مشاريع كمّلتهم" }
+      "label": { "en": "Projects Delivered", "tn": "مشاريع سلّمتها" }
     },
     {
-      "number": { "en": "100%", "tn": "100%" },
-      "label": { "en": "Client Satisfaction", "tn": "رضى الحرفاء" }
-    },
-    {
-      "number": { "en": "2+", "tn": "2+" },
-      "label": { "en": "Years Experience", "tn": "سنين خبرة" }
+      "number": { "en": "6", "tn": "6" },
+      "label": { "en": "Happy Clients", "tn": "عملاء راضين" }
     }
   ],
   "about": {
     "paragraphs": [
       {
-        "en": "Hey, I'm Mohamed Amin Ben Sassi — a Creative Video Editor & Multimedia Specialist with over 2 years of experience in creating meaningful visual content, where I produce media that aligns with values and purpose.",
-        "tn": "مرحباً، أنا محمد أمين بن ساسي — مونتير فيديو ومتخصص وسائط متعددة بخبرة تزيد عن سنتين في إنتاج محتوى بصري ذو معنى، حيث أُنتج وسائط تتوافق مع القيم والهدف."
+        "en": "Hey, I'm Amin — a Video Editor & Motion Graphics Specialist based in Tunisia. I help brands tell their story through clean edits, kinetic typography, and cinematic visuals.",
+        "tn": "مرحباً، أنا أمين — مونتير فيديو ومتخصص موشن جرافيك من تونس. أساعد العلامات التجارية تسرّ قصتها عبر مونتاج نظيف وطايبوجرافي متحرك ومرئيات سينمائية."
       },
       {
-        "en": "I've worked on projects covering Video editing, Motion graphics, Directing, Videography, and 3D art. My expertise includes Adobe Premiere, After Effects, Illustrator, Blender, and Photoshop. Also i've been working on my YouTube channel as a hobby since 2017.",
-        "tn": "عملت على مشاريع تشمل المونتاج، الجرافيك المتحرك، الإخراج، التصوير، والفن ثلاثي الأبعاد. أمتلك خبرة في Adobe Premiere وAfter Effects وIllustrator وBlender وPhotoshop. أعمل على قناتي في اليوتيوب كهواية منذ 2017."
+        "en": "Over 2+ years, I've delivered promos, explainer videos, product demos, and brand content for clients across Tunisia. My toolkit: Premiere Pro, After Effects, Blender, Photoshop, Illustrator.",
+        "tn": "خلال أكثر من سنتين، سلّمت إعلانات وفيديوهات توضيحية وعروض منتجات ومحتوى علامات تجارية لعملاء في تونس. أدواتي: Premiere Pro وAfter Effects وBlender وPhotoshop وIllustrator."
       }
     ],
     "skills": [
       {
         "title": { "en": "Video Editing", "tn": "مونتاج الفيديو" },
-        "description": { "en": "Adobe Premiere Pro, Vegas Pro, Timeline mastery", "tn": "Adobe Premiere Pro, Vegas Pro, إتقان التايم لاين" }
+        "description": { "en": "Premiere Pro, Vegas Pro, pacing, color grading", "tn": "Premiere Pro, Vegas Pro, إيقاع, تدريج ألوان" }
       },
       {
         "title": { "en": "Motion Graphics", "tn": "الموشن جرافيكس" },
@@ -57,49 +53,65 @@
     {
       "id": "p1",
       "title": { "en": "Raba7ni Loyalty App Explainer", "tn": "شرح تطبيق الولاء" },
-      "description": { "en": "A promotional video explaining a restaurant loyalty app with screen recordings, smooth transitions, and clear pacing.", "tn": "فيديو ترويجي يشرح تطبيق ولاء مع تسجيلات شاشة وانتقالات سلسة وإيقاع واضح." },
+      "client": "Raba7ni",
+      "role": { "en": "Edit + Motion Graphics", "tn": "مونتاج + موشن جرافيكس" },
+      "description": { "en": "Explainer video for a restaurant loyalty app — screen recordings, smooth transitions, clear pacing to drive app downloads.", "tn": "فيديو توضيحي لتطبيق ولاء مطاعم — تسجيلات شاشة وانتقالات سلسة وإيقاع واضح لزيادة التحميلات." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029935/Raba7ni_Final_Enhanced_1_q2wpp8.mp4"
     },
     {
       "id": "p2",
       "title": { "en": "Oxymass Product Demo", "tn": "عرض منتج Oxymass" },
-      "description": { "en": "A clean product demo highlighting features with close-ups, clear visuals, and subtle motion graphics.", "tn": "فيديو عرض منتج يبرز المميزات بلقطات قريبة ومرئيات واضحة وموشن جرافيكس خفيف." },
+      "client": "Oxymass",
+      "role": { "en": "Edit + Color Grading", "tn": "مونتاج + تدريج ألوان" },
+      "description": { "en": "Clean product demo with close-ups, clear visuals, and subtle motion graphics to highlight features.", "tn": "فيديو عرض منتج نظيف بلقطات قريبة ومرئيات واضحة وموشن جرافيكس خفيف لإبراز المميزات." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029108/oxymass_x1jsck.mp4"
     },
     {
       "id": "p3",
       "title": { "en": "Valentine's Gift Promo", "tn": "إعلان هدية عيد الحب" },
-      "description": { "en": "A cinematic commercial combining dynamic editing, color grading, and storytelling.", "tn": "إعلان سينمائي يجمع مونتاج ديناميكي وتدريج ألوان وسرد قصصي جذاب." },
+      "client": "Kadouline",
+      "role": { "en": "Full Production", "tn": "إنتاج كامل" },
+      "description": { "en": "Cinematic commercial with dynamic editing, color grading, and storytelling for a gift brand campaign.", "tn": "إعلان سينمائي بمونتاج ديناميكي وتدريج ألوان وسرد قصصي لحملة هدايا." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029934/Kadoline_2.0_1_bpdgjf.mp4"
     },
     {
       "id": "p4",
-      "title": { "en": "Digipress platform Video", "tn": "فيديو المعصرة الذكية Digipress" },
-      "description": { "en": "A brand video with clean editing, motion graphics, and strong visual storytelling.", "tn": "فيديو علامة تجارية بمونتاج نظيف وموشن جرافيكس وسرد بصري جذاب." },
+      "title": { "en": "Digipress Platform Video", "tn": "فيديو المعصرة الذكية Digipress" },
+      "client": "Digipress",
+      "role": { "en": "Edit + Motion Graphics", "tn": "مونتاج + موشن جرافيكس" },
+      "description": { "en": "Brand video with clean editing, motion graphics, and strong visual storytelling for a tech platform.", "tn": "فيديو علامة تجارية بمونتاج نظيف وموشن جرافيكس وسرد بصري قوي لمنصة تقنية." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029944/Digipress1_1_w1yw1a.mp4"
     },
     {
       "id": "p5",
       "title": { "en": "Egypt Travel Agency Ad", "tn": "إعلان رحلة إلى مصر" },
-      "description": { "en": "A commercial-style travel ad with cinematic shots and vibrant color grading.", "tn": "فيديو إعلاني لرحلة إلى مصر بلقطات سينمائية وتدريج ألوان نابض." },
+      "client": "Royaume Voyage",
+      "role": { "en": "Edit + Color Grading", "tn": "مونتاج + تدريج ألوان" },
+      "description": { "en": "Commercial-style travel ad with cinematic shots and vibrant color grading to drive bookings.", "tn": "فيديو إعلاني سياحي بلقطات سينمائية وتدريج ألوان نابض لزيادة الحجوزات." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029946/Egypt_Finalversion_1_xzxz6h.mp4"
     },
     {
       "id": "p6",
       "title": { "en": "SOS Logo Animation", "tn": "أنيميشن شعار SOS" },
-      "description": { "en": "A clean logo animation with smooth motion graphics and modern visual style.", "tn": "أنيميشن شعار بموشن جرافيكس سلسة وستايل بصري حديث." },
+      "client": "SOS Village d'enfants",
+      "role": { "en": "Motion Design", "tn": "تصميم موشن" },
+      "description": { "en": "Clean logo animation with smooth motion graphics for a children's charity brand identity.", "tn": "أنيميشن شعار بموشن جرافيكس سلسة لهوية علامة خيرية أطفال." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773029112/timelineSOSLOGOfinal_c6ctlc.mp4"
     },
     {
       "id": "p7",
       "title": { "en": "Cardigan Showcase", "tn": "عرض لبراند AM Fashion كاردغان" },
-      "description": { "en": "A girls clothing brand highlight featuring cozy cardigan styling and vibrant product detail.", "tn": "عرض لعلامة ملابس بنات يركّز على كاردغان بإطلالة دافئة وتفاصيل ملونة." },
+      "client": "AM Fashion",
+      "role": { "en": "Edit + Color Grading", "tn": "مونتاج + تدريج ألوان" },
+      "description": { "en": "Clothing brand product highlight — cozy cardigan styling with vibrant product detail shots.", "tn": "عرض لعلامة ملابس — كاردغان بإطلالة دافئة وتفاصيل منتجات ملونة." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773518213/am2_1_ulwvau.mp4"
     },
     {
       "id": "p8",
       "title": { "en": "Korean AI Love Short Film", "tn": "فيلم حب كوري بالذكاء الاصطناعي" },
-      "description": { "en": "A short romance story created entirely with AI visuals and storytelling.", "tn": "قصة حب قصيرة تمّ صنعها بالكامل بصرياً بالذكاء الاصطناعي." },
+      "client": "Personal Project",
+      "role": { "en": "Concept + Edit + AI Visuals", "tn": "فكرة + مونتاج + مرئيات AI" },
+      "description": { "en": "Short romance story created entirely with AI-generated visuals — concept, scripting, and editing.", "tn": "قصة حب قصيرة بالكامل بصور AI مولّدة — فكرة وكتابة وسيناريو ومونتاج." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/v1773518734/Verticalresultkoreanvid_dyoeyg.mp4"
     }
   ],
