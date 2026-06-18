@@ -351,9 +351,10 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
     observer.observe(item);
 });
 
-// Voice Players
+// ── Voice Players (event delegation for dynamic cards) ──
 (function () {
-    let activePair = null; // { audio, player, bars }
+    var activePair = null;
+    var initialized = new WeakSet();
 
     function fmt(s) {
         if (!isFinite(s) || s < 0) return '0:00';
@@ -395,7 +396,10 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
         activePair = null;
     }
 
-    document.querySelectorAll('.voice-player').forEach(function(player) {
+    function initPlayer(player) {
+        if (initialized.has(player)) return;
+        initialized.add(player);
+
         var btn       = player.querySelector('.voice-play-btn');
         var iconPlay  = player.querySelector('.icon-play');
         var iconPause = player.querySelector('.icon-pause');
@@ -404,7 +408,6 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
         var audio     = player.querySelector('audio');
         var src       = player.getAttribute('data-src');
 
-        // set src directly
         audio.src = src;
 
         audio.addEventListener('loadedmetadata', function() {
@@ -428,16 +431,12 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
             e.preventDefault();
             e.stopPropagation();
 
-            // clicking the active player = pause it
             if (activePair && activePair.audio === audio) {
                 stopActive();
                 return;
             }
 
-            // stop whatever else is playing
             stopActive();
-
-            // ensure audio is loaded
             audio.load();
             audio.play().then(function() {
                 iconPlay.style.display  = 'none';
@@ -445,7 +444,22 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
                 activePair = { audio: audio, player: player, bars: bars };
             }).catch(function(err) { console.warn('play failed', err); });
         });
+    }
+
+    // Observe for dynamically added voice players
+    var voiceObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+            m.addedNodes.forEach(function(node) {
+                if (node.nodeType !== 1) return;
+                if (node.classList && node.classList.contains('voice-player')) initPlayer(node);
+                node.querySelectorAll && node.querySelectorAll('.voice-player').forEach(initPlayer);
+            });
+        });
     });
+    voiceObserver.observe(document.body, { childList: true, subtree: true });
+
+    // Init any existing ones
+    document.querySelectorAll('.voice-player').forEach(initPlayer);
 })();
 
 
