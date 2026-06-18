@@ -453,12 +453,11 @@ nav ul a:hover::after { width: 100%; }
 
 .hero-video {
     width: 100%;
+    max-width: 600px;
     height: auto;
     object-fit: contain;
-    object-position: bottom;
     display: block;
-    -webkit-mask-image: radial-gradient(ellipse 52% 62% at 50% 32%, black 25%, transparent 75%);
-    mask-image: radial-gradient(ellipse 52% 62% at 50% 32%, black 25%, transparent 75%);
+    border-radius: 12px;
     filter: drop-shadow(0 0 60px rgba(60,120,255,0.35));
 }
 
