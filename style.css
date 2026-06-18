@@ -1230,6 +1230,16 @@ section .section-subtitle {
     background: rgba(255,255,255,0.28);
 }
 
+/* Hide play button on non-active carousel items */
+.carousel-item:not(.active) .play-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+.carousel-item.active .play-btn {
+    opacity: 1;
+    pointer-events: none;
+}
+
 /* ── Fullscreen video modal ── */
 .video-modal {
     display: none;
