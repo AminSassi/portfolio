@@ -101,6 +101,29 @@ body.modal-open {
 body:has(a:hover) .glass-cursor-ring,
 body:has(button:hover) .glass-cursor-ring { width: 60px; height: 60px; border-color: rgba(100,180,255,0.5); }
 
+/* ── Mouse Spotlight Glow ── */
+.mouse-spotlight {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(96,184,255,0.07) 0%, rgba(96,184,255,0.03) 30%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: left 0.15s ease-out, top 0.15s ease-out, opacity 0.4s;
+    will-change: left, top;
+    opacity: 0;
+}
+
+.mouse-spotlight.active {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .mouse-spotlight { display: none; }
+}
+
 /* Custom cursor states */
 body:has(.video-wrapper:hover) .glass-cursor {
     width: 60px; height: 60px;

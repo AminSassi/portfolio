@@ -620,3 +620,64 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
 
     revealSections.forEach(function(sec) { revealObserver.observe(sec); });
 })();
+
+// ── Mouse Spotlight Glow ──
+(function () {
+    var spotlight = document.getElementById('mouseSpotlight');
+    if (!spotlight || window.innerWidth < 769) return;
+
+    var sx = 0, sy = 0, cx = 0, cy = 0, rafId = null;
+
+    function animateSpotlight() {
+        cx += (sx - cx) * 0.1;
+        cy += (sy - cy) * 0.1;
+        spotlight.style.left = cx + 'px';
+        spotlight.style.top = cy + 'px';
+        if (Math.abs(sx - cx) > 0.5 || Math.abs(sy - cy) > 0.5) {
+            rafId = requestAnimationFrame(animateSpotlight);
+        } else {
+            rafId = null;
+        }
+    }
+
+    document.addEventListener('mousemove', function(e) {
+        sx = e.clientX;
+        sy = e.clientY;
+        spotlight.classList.add('active');
+        if (!rafId) rafId = requestAnimationFrame(animateSpotlight);
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', function() {
+        spotlight.classList.remove('active');
+    });
+})();
+
+// ── Scroll Parallax for floating icons and background logos ──
+(function () {
+    var bgLogos = document.querySelectorAll('.bg-logo');
+    var heroIcons = document.querySelectorAll('.hero-icon');
+    var ticking = false;
+
+    function updateParallax() {
+        var scrollY = window.pageYOffset;
+
+        bgLogos.forEach(function(logo, i) {
+            var speed = 0.02 + i * 0.008;
+            logo.style.transform = 'translateY(' + (scrollY * speed) + 'px)';
+        });
+
+        heroIcons.forEach(function(icon, i) {
+            var speed = 0.05 + i * 0.03;
+            icon.style.marginTop = (scrollY * speed) + 'px';
+        });
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(updateParallax);
+        }
+    }, { passive: true });
+})();
