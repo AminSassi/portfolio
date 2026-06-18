@@ -439,7 +439,8 @@ nav ul a:hover::after { width: 100%; }
     transform: translateY(30px);
 }
 
-.hero-portrait img {
+.hero-portrait img,
+.hero-fallback-img {
     width: 100%;
     height: auto;
     object-fit: contain;
@@ -448,6 +449,21 @@ nav ul a:hover::after { width: 100%; }
     -webkit-mask-image: radial-gradient(ellipse 52% 62% at 50% 32%, black 25%, transparent 75%);
     mask-image: radial-gradient(ellipse 52% 62% at 50% 32%, black 25%, transparent 75%);
     filter: drop-shadow(0 0 60px rgba(60,120,255,0.35));
+}
+
+.hero-video {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom;
+    display: block;
+    -webkit-mask-image: radial-gradient(ellipse 52% 62% at 50% 32%, black 25%, transparent 75%);
+    mask-image: radial-gradient(ellipse 52% 62% at 50% 32%, black 25%, transparent 75%);
+    filter: drop-shadow(0 0 60px rgba(60,120,255,0.35));
+}
+
+.hero-fallback-img {
+    display: none;
 }
 
 .hero-portrait-fallback {
