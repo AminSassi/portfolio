@@ -606,3 +606,76 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
 
     revealSections.forEach(function(sec) { revealObserver.observe(sec); });
 })();
+
+// ── Scroll Indicator Fade ──
+(function () {
+    var indicator = document.getElementById('scrollIndicator');
+    if (!indicator) return;
+
+    function checkScroll() {
+        if (window.pageYOffset > 150) {
+            indicator.classList.add('hidden');
+        } else {
+            indicator.classList.remove('hidden');
+        }
+    }
+
+    window.addEventListener('scroll', checkScroll, { passive: true });
+})();
+
+// ── Enhanced Scroll Reveal for child elements ──
+(function () {
+    var staggerContainers = document.querySelectorAll('.stats-container, .skills-grid, .tools-marquee, .cta-social-row');
+    staggerContainers.forEach(function(el) { el.classList.add('reveal-stagger'); });
+
+    var enhancedObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+    staggerContainers.forEach(function(el) { enhancedObserver.observe(el); });
+})();
+
+// ── Portfolio Card Grid (Feature 2) ──
+(function () {
+    var cardsContainer = document.getElementById('portfolioCards');
+    if (!cardsContainer) return;
+
+    fetch('data.json')
+        .then(function(res) { return res.json(); })
+        .then(function(json) {
+            var data = json.data || json;
+            if (!data.portfolio) return;
+            var lang = localStorage.getItem('preferredLanguage') || 'en';
+
+            cardsContainer.innerHTML = data.portfolio.map(function(item, i) {
+                var thumb = '';
+                if (item.fullVideo && item.fullVideo.includes('cloudinary.com')) {
+                    thumb = item.fullVideo.replace('/video/upload/', '/video/upload/w_800,c_fill/').replace(/\.mp4$/, '.jpg');
+                }
+                var desc = item.description ? (item.description[lang] || item.description.en) : '';
+                return '<div class="portfolio-card" style="animation-delay:' + (i * 0.08) + 's">' +
+                    '<div class="card-video" data-video="' + item.fullVideo + '">' +
+                        '<video class="video-preview" poster="' + thumb + '" src="' + item.fullVideo + '" loop muted playsinline preload="metadata"></video>' +
+                        '<div class="card-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg></div>' +
+                    '</div>' +
+                    '<div class="card-body">' +
+                        '<h3 class="card-title">' + (item.title[lang] || item.title.en) + '</h3>' +
+                        '<p class="card-desc">' + desc + '</p>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+
+            // Observe card videos for lazy playback
+            cardsContainer.querySelectorAll('.video-preview').forEach(function(video) {
+                video.classList.add('loaded');
+                if (typeof previewObserver !== 'undefined') {
+                    previewObserver.observe(video);
+                }
+            });
+        })
+        .catch(function() {});
+})();
