@@ -893,6 +893,22 @@ section {
     z-index: 1;
 }
 
+/* ── Inline CTA (between sections) ── */
+.cta-inline {
+    text-align: center;
+    padding: 3rem 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-inline-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.3px;
+}
+
 section h2 {
     font-size: 2.8rem;
     font-weight: 800;
