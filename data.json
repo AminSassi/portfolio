@@ -150,6 +150,16 @@
       "impact": { "en": "Video used for social media ads and product pages.", "tn": "استُخدم الفيديو في إعلانات التواصل الاجتماعي وصفحات المنتجات." },
       "description": { "en": "Product showcase video for Oxymass supplements with dynamic editing.", "tn": "فيديو عرض منتجات Oxymass بمونتاج ديناميكي." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/OXYMASS_1_gahqt5.mp4"
+    },
+    {
+      "id": "p11",
+      "title": { "en": "PlayStation Wall Holder", "tn": "حامل بلاي ستيشن للحيط" },
+      "client": "PlayStation",
+      "role": { "en": "Edit + Motion Graphics", "tn": "مونتاج + موشن جرافيكس" },
+      "problem": { "en": "Client needed a product video for a PlayStation wall holder accessory.", "tn": "العميل يحتاج فيديو منتج لحامل بلاي ستيشن للحيط." },
+      "impact": { "en": "Video used for product promotion and social media marketing.", "tn": "استُخدم الفيديو للترويج للمنتج وتسويق وسائل التواصل." },
+      "description": { "en": "Product showcase video for a PlayStation wall holder with dynamic editing.", "tn": "فيديو عرض منتج حامل بلاي ستيشن للحيط بمونتاج ديناميكي." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/PS_HOLDERFINAL_2.0mp4_oxvfr5.mp4"
     }
   ],
   "feedback": [
