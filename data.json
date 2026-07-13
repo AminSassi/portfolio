@@ -160,6 +160,16 @@
       "impact": { "en": "Video used for product promotion and social media marketing.", "tn": "استُخدم الفيديو للترويج للمنتج وتسويق وسائل التواصل." },
       "description": { "en": "Product showcase video for a PlayStation wall holder with dynamic editing.", "tn": "فيديو عرض منتج حامل بلاي ستيشن للحيط بمونتاج ديناميكي." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/PS_HOLDERFINAL_2.0mp4_oxvfr5.mp4"
+    },
+    {
+      "id": "p12",
+      "title": { "en": "Mimo AI Agent Video", "tn": "فيديو Mimo AI Agent" },
+      "client": "Mimo",
+      "role": { "en": "Edit + Motion Graphics", "tn": "مونتاج + موشن جرافيكس" },
+      "problem": { "en": "Created a promotional video showcasing the Mimo AI Agent capabilities.", "tn": "عمل فيديو ترويجي يعرض إمكانيات Mimo AI Agent." },
+      "impact": { "en": "Video used to promote the AI agent on social media platforms.", "tn": "استُخدم الفيديو للترويج لـ AI Agent على منصات التواصل." },
+      "description": { "en": "Promotional video for Mimo AI Agent with clean editing and engaging visuals.", "tn": "فيديو ترويجي لـ Mimo AI Agent بمونتاج نظيف ومرئيات جذابة." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/The_100_Free_Ai_Agent_Nobody_is_talking_about_Comment_Mimo_and_i_send_you_the_link_ysqgjh.mp4"
     }
   ],
   "feedback": [
