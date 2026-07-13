@@ -140,6 +140,16 @@
       "impact": { "en": "Video used for brand promotion and social media.", "tn": "استُخدم الفيديو للترويج للعلامة التجارية ووسائل التواصل." },
       "description": { "en": "Promotional video for Hichri Visuals with clean editing and motion graphics.", "tn": "فيديو ترويجي لـ Hichri Visuals بمونتاج نظيف وموشن جرافيكس." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/Dm_for_work_wh46am.mp4"
+    },
+    {
+      "id": "p10",
+      "title": { "en": "Oxymass #1", "tn": "Oxymass #1" },
+      "client": "Oxymass",
+      "role": { "en": "Edit + Motion Graphics", "tn": "مونتاج + موشن جرافيكس" },
+      "problem": { "en": "Client needed a second product video for their supplement brand.", "tn": "العميل يحتاج فيديو منتج ثاني لعلامته التجارية." },
+      "impact": { "en": "Video used for social media ads and product pages.", "tn": "استُخدم الفيديو في إعلانات التواصل الاجتماعي وصفحات المنتجات." },
+      "description": { "en": "Product showcase video for Oxymass supplements with dynamic editing.", "tn": "فيديو عرض منتجات Oxymass بمونتاج ديناميكي." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/OXYMASS_1_gahqt5.mp4"
     }
   ],
   "feedback": [
