@@ -95,26 +95,23 @@ document.querySelectorAll('#navMenu a').forEach(link => {
     });
 });
 
-// Scroll updates (throttled via requestAnimationFrame)
+// ── Unified Scroll Handler ──
 let lastScroll = 0;
 const navbar = document.getElementById('navbar');
 const backToTop = document.getElementById('backToTop');
-
-let latestScrollY = 0;
 let scrollTicking = false;
-const onScroll = () => {
-    latestScrollY = window.pageYOffset;
+const bgLogos = document.querySelectorAll('.bg-logo');
 
+const onScroll = () => {
     if (!scrollTicking) {
         scrollTicking = true;
         requestAnimationFrame(() => {
-            const scrolled = latestScrollY;
-            const parallaxSpeed = 0.3;
+            const scrolled = window.pageYOffset;
 
             // Parallax background
-            document.documentElement.style.setProperty('--scroll-offset', `${scrolled * parallaxSpeed}px`);
+            document.documentElement.style.setProperty('--scroll-offset', (scrolled * 0.3) + 'px');
 
-            // Sticky nav (hide on scroll down)
+            // Sticky nav
             if (scrolled <= 0) {
                 navbar.classList.remove('hidden');
             } else if (scrolled > lastScroll && scrolled > 100) {
@@ -123,11 +120,49 @@ const onScroll = () => {
                 navbar.classList.remove('hidden');
             }
 
-            // Back-to-top button
-            if (scrolled > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
+            // Back-to-top
+            backToTop.classList.toggle('visible', scrolled > 300);
+
+            // Background logos parallax
+            bgLogos.forEach(function(logo, i) {
+                logo.style.transform = 'translateY(' + (scrolled * (0.02 + i * 0.008)) + 'px)';
+            });
+
+            // Hero icons scroll parallax
+            heroIcons.forEach(function(icon, i) {
+                icon.style.marginTop = (scrolled * (0.05 + i * 0.03)) + 'px';
+            });
+
+            // Hero scroll zoom-out
+            var hero = document.querySelector('.hero-cinematic');
+            if (hero) {
+                var maxScroll = window.innerHeight * 0.6;
+                var progress = Math.min(scrolled / maxScroll, 1);
+                var portrait = hero.querySelector('.hero-portrait');
+                if (portrait) portrait.style.transform = 'translateX(-50%) scale(' + (1.15 - 0.15 * progress) + ')';
+                var overlay = hero.querySelector('.hero-overlay-text');
+                if (overlay) {
+                    overlay.style.opacity = 1 - (progress * 1.5);
+                    overlay.style.transform = 'translateY(' + (progress * 30) + 'px)';
+                }
+                if (scrolled > 20) hero.classList.add('scrolled');
+                else hero.classList.remove('scrolled');
+            }
+
+            // Dynamic Island
+            var island = document.getElementById('dynamicIsland');
+            var sectionLabel = document.getElementById('diSection');
+            if (island && sectionLabel) {
+                island.classList.toggle('visible', scrolled > 300);
+                var sections = document.querySelectorAll('section[id]');
+                var current = 'home';
+                sections.forEach(function(sec) { if (scrolled >= sec.offsetTop - 200) current = sec.id; });
+                if (current !== lastIslandSection) {
+                    lastIslandSection = current;
+                    var lang = localStorage.getItem('preferredLanguage') || 'en';
+                    var names = { en: { home: 'Home', about: 'About', tools: 'Tools', experience: 'Journey', portfolio: 'Portfolio', testimonials: 'Feedback', youtube: 'YouTube', contact: 'Contact' }, tn: { home: 'الرئيسية', about: 'من أنا', tools: 'الأدوات', experience: 'الرحلة', portfolio: 'أعمالي', testimonials: 'آراء', youtube: 'يوتيوب', contact: 'تواصل' } };
+                    sectionLabel.textContent = (names[lang] || names.en)[current] || current;
+                }
             }
 
             lastScroll = scrolled;
@@ -136,6 +171,7 @@ const onScroll = () => {
     }
 };
 
+let lastIslandSection = '';
 window.addEventListener('scroll', onScroll, { passive: true });
 
 backToTop.addEventListener('click', () => {
@@ -226,24 +262,80 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ── Optimised Cursor (RAF only on move, not infinite loop) ──
+// ── Unified Animation Loop ──
 const cursor = document.getElementById('glassCursor');
 const ring   = document.getElementById('glassCursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0, rafId = null;
-function stepRing() {
+let mx = 0, my = 0, rx = 0, ry = 0;
+let spotX = 0, spotY = 0, scx = 0, scy = 0;
+let heroMx = 0, heroMy = 0;
+const heroIcons = document.querySelectorAll('.hero-icon');
+const heroCurrentX = [0, 0, 0], heroCurrentY = [0, 0, 0];
+let spotlight = document.getElementById('mouseSpotlight');
+let unifiedRafActive = false;
+
+function unifiedTick() {
+    // Cursor ring smooth follow
     rx += (mx - rx) * 0.14;
     ry += (my - ry) * 0.14;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    if (Math.abs(mx-rx) > 0.5 || Math.abs(my-ry) > 0.5) rafId = requestAnimationFrame(stepRing);
-    else rafId = null;
+    cursor.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
+    ring.style.transform   = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
+
+    // Spotlight smooth follow
+    scx += (spotX - scx) * 0.1;
+    scy += (spotY - scy) * 0.1;
+    if (spotlight) spotlight.style.transform = 'translate(' + scx + 'px,' + scy + 'px) translate(-50%,-50%)';
+
+    // Hero icon parallax
+    heroIcons.forEach(function(icon, i) {
+        var speed = 0.03 + i * 0.015;
+        heroCurrentX[i] += (heroMx - heroCurrentX[i]) * speed;
+        heroCurrentY[i] += (heroMy - heroCurrentY[i]) * speed;
+        var bx = heroCurrentX[i] * (15 + i * 8);
+        var by = heroCurrentY[i] * (10 + i * 6);
+        icon.style.translate = bx + 'px ' + by + 'px';
+    });
+
+    // Check if anything still needs animating
+    var ringMoving = Math.abs(mx - rx) > 0.5 || Math.abs(my - ry) > 0.5;
+    var spotMoving = Math.abs(spotX - scx) > 0.5 || Math.abs(spotY - scy) > 0.5;
+    var heroMoving = heroIcons.length > 0 && (heroMx !== 0 || heroMy !== 0);
+    if (ringMoving || spotMoving || heroMoving) {
+        unifiedRafActive = true;
+        requestAnimationFrame(unifiedTick);
+    } else {
+        unifiedRafActive = false;
+    }
 }
-document.addEventListener('mousemove', e => {
+
+function startUnifiedLoop() {
+    if (!unifiedRafActive) {
+        unifiedRafActive = true;
+        requestAnimationFrame(unifiedTick);
+    }
+}
+
+document.addEventListener('mousemove', function(e) {
     mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
-    if (!rafId) rafId = requestAnimationFrame(stepRing);
+    spotX = e.clientX; spotY = e.clientY;
+    if (spotlight) spotlight.classList.add('active');
+    startUnifiedLoop();
 }, { passive: true });
+
+// Hero icon parallax on mousemove
+var heroSection = document.querySelector('.hero');
+if (heroSection) {
+    heroSection.addEventListener('mousemove', function(e) {
+        var rect = heroSection.getBoundingClientRect();
+        heroMx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+        heroMy = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+        startUnifiedLoop();
+    }, { passive: true });
+    heroSection.addEventListener('mouseleave', function() { heroMx = 0; heroMy = 0; }, { passive: true });
+}
+
+document.addEventListener('mouseleave', function() {
+    if (spotlight) spotlight.classList.remove('active');
+});
 
 // ── Ripple on click ──
 const rs = document.createElement('style');
@@ -526,199 +618,51 @@ document.querySelectorAll('.stat-card').forEach((item, i) => {
     counters.forEach(function(c) { counterObserver.observe(c); });
 })();
 
-// ── Hero Icon Parallax (mouse follow) ──
-(function () {
-    var icons = document.querySelectorAll('.hero-icon');
-    if (!icons.length) return;
-
-    var heroSection = document.querySelector('.hero');
-    var mouseX = 0, mouseY = 0;
-    var currentX = [0, 0, 0], currentY = [0, 0, 0];
-    var rafId = null;
-
-    function animateIcons() {
-        icons.forEach(function(icon, i) {
-            var speed = 0.03 + i * 0.015;
-            currentX[i] += (mouseX - currentX[i]) * speed;
-            currentY[i] += (mouseY - currentY[i]) * speed;
-            var baseX = currentX[i] * (15 + i * 8);
-            var baseY = currentY[i] * (10 + i * 6);
-            icon.style.translate = baseX + 'px ' + baseY + 'px';
-        });
-        rafId = requestAnimationFrame(animateIcons);
-    }
-
-    if (heroSection) {
-        heroSection.addEventListener('mousemove', function(e) {
-            var rect = heroSection.getBoundingClientRect();
-            mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-            mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-            if (!rafId) rafId = requestAnimationFrame(animateIcons);
-        }, { passive: true });
-
-        heroSection.addEventListener('mouseleave', function() {
-            mouseX = 0;
-            mouseY = 0;
-        }, { passive: true });
-    }
-})();
-
-// ── Dynamic Island ──
-(function () {
-    var island = document.getElementById('dynamicIsland');
-    var sectionLabel = document.getElementById('diSection');
-    if (!island || !sectionLabel) return;
-
-    var sections = document.querySelectorAll('section[id]');
-    var lastSection = '';
-
-    var sectionNames = {
-        en: { home: 'Home', about: 'About', tools: 'Tools', experience: 'Journey', portfolio: 'Portfolio', testimonials: 'Feedback', youtube: 'YouTube', contact: 'Contact' },
-        tn: { home: 'الرئيسية', about: 'من أنا', tools: 'الأدوات', experience: 'الرحلة', portfolio: 'أعمالي', testimonials: 'آراء', youtube: 'يوتيوب', contact: 'تواصل' }
-    };
-
-    function updateIsland() {
-        var scrollY = window.pageYOffset;
-        var lang = localStorage.getItem('preferredLanguage') || 'en';
-
-        if (scrollY > 300) {
-            island.classList.add('visible');
-        } else {
-            island.classList.remove('visible');
-        }
-
-        var current = 'home';
-        sections.forEach(function(sec) {
-            if (scrollY >= sec.offsetTop - 200) {
-                current = sec.id;
-            }
-        });
-
-        if (current !== lastSection) {
-            lastSection = current;
-            var names = sectionNames[lang] || sectionNames.en;
-            sectionLabel.textContent = names[current] || current;
-        }
-    }
-
-    window.addEventListener('scroll', updateIsland, { passive: true });
-    updateIsland();
-})();
-
 // ── Section Reveal on Scroll ──
 (function () {
     var revealSections = document.querySelectorAll('section:not(.hero)');
     revealSections.forEach(function(sec) { sec.classList.add('reveal'); });
-
     var revealObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('revealed');
         });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
     revealSections.forEach(function(sec) { revealObserver.observe(sec); });
 })();
 
-// ── Mouse Spotlight Glow ──
+// ── Cursor Hover Classes (replaces body:has() for performance) ──
 (function () {
-    var spotlight = document.getElementById('mouseSpotlight');
-    if (!spotlight || window.innerWidth < 769) return;
-
-    var sx = 0, sy = 0, cx = 0, cy = 0, rafId = null;
-
-    function animateSpotlight() {
-        cx += (sx - cx) * 0.1;
-        cy += (sy - cy) * 0.1;
-        spotlight.style.left = cx + 'px';
-        spotlight.style.top = cy + 'px';
-        if (Math.abs(sx - cx) > 0.5 || Math.abs(sy - cy) > 0.5) {
-            rafId = requestAnimationFrame(animateSpotlight);
-        } else {
-            rafId = null;
+    var cursorMap = {
+        '.video-wrapper': 'cursor-video',
+        '.tool-item': 'cursor-tool',
+        '.cta-button': 'cursor-cta',
+        '.cta-secondary': 'cursor-cta',
+        '.timeline-content': 'cursor-timeline',
+        '.feedback-card': 'cursor-feedback',
+        'a': 'cursor-link',
+        'button': 'cursor-link'
+    };
+    var currentClass = '';
+    document.addEventListener('mouseover', function(e) {
+        var el = e.target;
+        while (el && el !== document.body) {
+            for (var sel in cursorMap) {
+                if (el.matches(sel)) {
+                    if (currentClass !== cursorMap[sel]) {
+                        if (currentClass) document.body.classList.remove(currentClass);
+                        currentClass = cursorMap[sel];
+                        document.body.classList.add(currentClass);
+                    }
+                    return;
+                }
+            }
+            el = el.parentElement;
         }
-    }
-
-    document.addEventListener('mousemove', function(e) {
-        sx = e.clientX;
-        sy = e.clientY;
-        spotlight.classList.add('active');
-        if (!rafId) rafId = requestAnimationFrame(animateSpotlight);
+        if (currentClass) { document.body.classList.remove(currentClass); currentClass = ''; }
     }, { passive: true });
-
-    document.addEventListener('mouseleave', function() {
-        spotlight.classList.remove('active');
-    });
-})();
-
-// ── Scroll Parallax for floating icons and background logos ──
-(function () {
-    var bgLogos = document.querySelectorAll('.bg-logo');
-    var heroIcons = document.querySelectorAll('.hero-icon');
-    var ticking = false;
-
-    function updateParallax() {
-        var scrollY = window.pageYOffset;
-
-        bgLogos.forEach(function(logo, i) {
-            var speed = 0.02 + i * 0.008;
-            logo.style.transform = 'translateY(' + (scrollY * speed) + 'px)';
-        });
-
-        heroIcons.forEach(function(icon, i) {
-            var speed = 0.05 + i * 0.03;
-            icon.style.marginTop = (scrollY * speed) + 'px';
-        });
-
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', function() {
-        if (!ticking) {
-            ticking = true;
-            requestAnimationFrame(updateParallax);
-        }
-    }, { passive: true });
-})();
-
-// ── Hero Scroll Zoom-Out Effect ──
-(function () {
-    var hero = document.querySelector('.hero-cinematic');
-    if (!hero) return;
-
-    var ticking = false;
-    var maxScroll = window.innerHeight * 0.6;
-
-    function updateHeroZoom() {
-        var scrollY = window.pageYOffset;
-        var progress = Math.min(scrollY / maxScroll, 1);
-
-        // Scale from 1.15 to 1.0
-        var scale = 1.15 - (0.15 * progress);
-        hero.querySelector('.hero-portrait').style.transform = 'translateX(-50%) scale(' + scale + ')';
-
-        // Fade out text
-        var overlay = hero.querySelector('.hero-overlay-text');
-        if (overlay) {
-            overlay.style.opacity = 1 - (progress * 1.5);
-            overlay.style.transform = 'translateY(' + (progress * 30) + 'px)';
-        }
-
-        // Toggle scrolled class for CSS transitions
-        if (scrollY > 20) {
-            hero.classList.add('scrolled');
-        } else {
-            hero.classList.remove('scrolled');
-        }
-
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', function() {
-        if (!ticking) {
-            ticking = true;
-            requestAnimationFrame(updateHeroZoom);
+    document.addEventListener('mouseout', function(e) {
+        if (e.target === document.body || !e.relatedTarget) {
+            if (currentClass) { document.body.classList.remove(currentClass); currentClass = ''; }
         }
     }, { passive: true });
 })();
