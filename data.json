@@ -170,6 +170,46 @@
       "impact": { "en": "Video used to promote the AI agent on social media platforms.", "tn": "استُخدم الفيديو للترويج لـ AI Agent على منصات التواصل." },
       "description": { "en": "Promotional video for Mimo AI Agent with clean editing and engaging visuals.", "tn": "فيديو ترويجي لـ Mimo AI Agent بمونتاج نظيف ومرئيات جذابة." },
       "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/The_100_Free_Ai_Agent_Nobody_is_talking_about_Comment_Mimo_and_i_send_you_the_link_ysqgjh.mp4"
+    },
+    {
+      "id": "p13",
+      "title": { "en": "Oxymass #2", "tn": "Oxymass #2" },
+      "client": "Oxymass",
+      "role": { "en": "Edit + Motion Graphics", "tn": "مونتاج + موشن جرافيكس" },
+      "problem": { "en": "Client needed another product video for their supplement brand.", "tn": "العميل يحتاج فيديو منتج آخر لعلامته التجارية." },
+      "impact": { "en": "Video used for social media ads and product pages.", "tn": "استُخدم الفيديو في إعلانات التواصل الاجتماعي وصفحات المنتجات." },
+      "description": { "en": "Second product showcase video for Oxymass supplements with dynamic editing and motion graphics.", "tn": "فيديو عرض منتجات Oxymass الثاني بمونتاج ديناميكي وموشن جرافيكس." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/OXYMASS_FINAL2_fnyftw.mp4"
+    },
+    {
+      "id": "p14",
+      "title": { "en": "Aziz Rent a Car", "tn": "Aziz Rent a Car" },
+      "client": "Aziz Rent a Car",
+      "role": { "en": "Edit + Motion Graphics", "tn": "مونتاج + موشن جرافيكس" },
+      "problem": { "en": "Client needed a promotional video for their car rental brand.", "tn": "العميل يحتاج فيديو ترويجي لعلامته التجارية لتأجير السيارات." },
+      "impact": { "en": "Video used for brand promotion and social media marketing.", "tn": "استُخدم الفيديو للترويج للعلامة التجارية وتسويق وسائل التواصل." },
+      "description": { "en": "Promotional video for Aziz Rent a Car with dynamic editing and engaging visuals.", "tn": "فيديو ترويجي لـ Aziz Rent a Car بمونتاج ديناميكي ومرئيات جذابة." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/Final_AZIZ_o2h3rz.mp4"
+    },
+    {
+      "id": "p15",
+      "title": { "en": "FMD Desk", "tn": "FMD Desk" },
+      "client": "Personal Project",
+      "role": { "en": "Concept + Edit + Motion Graphics", "tn": "فكرة + مونتاج + موشن جرافيكس" },
+      "problem": { "en": "Wanted to create a fun desk showcase video as a creative experiment.", "tn": "أردت عمل فيديو عرض مكتب ممتع كتجربة إبداعية." },
+      "impact": { "en": "Personal creative project to showcase motion design skills.", "tn": "مشروع إبداعي شخصي لإبراز مهارات التصميم الموشن." },
+      "description": { "en": "Fun desk showcase video with dynamic editing and motion graphics — a personal creative experiment.", "tn": "فيديو عرض مكتب ممتع بمونتاج ديناميكي وموشن جرافيكس — تجربة إبداعية شخصية." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/Comp_1_ngrz3r.mp4"
+    },
+    {
+      "id": "p16",
+      "title": { "en": "SpeedRamp Edit", "tn": "SpeedRamp Edit" },
+      "client": "Personal Project",
+      "role": { "en": "Concept + Edit", "tn": "فكرة + مونتاج" },
+      "problem": { "en": "Wanted to experiment with speed ramping techniques in video editing.", "tn": "أردت تجربة تقنيات تسريع وتبطيء السرعة في المونتاج." },
+      "impact": { "en": "Personal creative project to experiment with speed ramp editing.", "tn": "مشروع إبداعي شخصي لتجربة مونتاج Speed Ramp." },
+      "description": { "en": "Fun speed ramp edit showcasing dynamic pacing and creative transitions — a personal experiment.", "tn": "مونتاج Speed Ramp ممتع بإيقاع ديناميكي وانتقالات إبداعية — تجربة شخصية." },
+      "fullVideo": "https://res.cloudinary.com/dldy0enia/video/upload/mespeedramp_dqm6tz.mp4"
     }
   ],
   "feedback": [
